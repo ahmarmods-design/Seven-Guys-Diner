@@ -1,0 +1,249 @@
+Absolutely. Since **70–90% of your customers will visit from their phones**, we should make mobile the highest priority.
+
+Paste this into Replit after your main prompt.
+
+---
+
+# MOBILE-FIRST EXPERIENCE INSTRUCTION
+
+This website must be designed **mobile-first**, not desktop-first.
+
+Most visitors will use smartphones, so optimize the entire experience for mobile before desktop.
+
+## Responsive Breakpoints
+
+Design for:
+
+* 320px
+* 360px
+* 375px
+* 390px
+* 414px
+* 430px
+* 768px
+* 1024px
+* 1440px
+* 1920px
+
+The website must look perfect on every screen.
+
+---
+
+# Mobile Navigation
+
+Create a premium mobile navigation.
+
+Requirements:
+
+* Sticky navbar
+* Transparent initially
+* White background after scrolling
+* Hamburger menu
+* Smooth animation
+* Large touch targets
+* Close menu when a link is clicked
+
+---
+
+# Hero Section (Mobile)
+
+The hero must be redesigned for mobile instead of simply shrinking the desktop version.
+
+Order:
+
+1. Logo
+2. Headline
+3. Description
+4. Rating badge
+5. Delivery badge
+6. Opening hours
+7. Order Now button
+8. View Menu button
+9. Large Detroit Pizza image
+
+Center everything beautifully.
+
+Never let text overlap images.
+
+---
+
+# Mobile Typography
+
+Headings:
+
+Large but readable.
+
+Body text:
+
+Comfortable reading size.
+
+Buttons:
+
+Large enough for thumbs.
+
+---
+
+# Buttons
+
+Buttons must be at least 48px tall.
+
+Rounded.
+
+Easy to tap.
+
+Spacing between buttons.
+
+---
+
+# Cards
+
+Cards must stack vertically.
+
+Equal spacing.
+
+No horizontal scrolling.
+
+---
+
+# Images
+
+Images should scale correctly.
+
+Never overflow.
+
+Never become blurry.
+
+Maintain aspect ratio.
+
+Use responsive loading.
+
+---
+
+# Floating WhatsApp Button
+
+Always visible.
+
+Bottom-right.
+
+Does not block important content.
+
+Safe area compatible.
+
+---
+
+# Sticky Order Button
+
+Show a sticky "Order Now" button on mobile after the user scrolls past the hero.
+
+This button should stay visible and open WhatsApp when tapped.
+
+---
+
+# Menu
+
+Menu cards should become a single-column layout on mobile.
+
+Filters should become horizontally scrollable chips.
+
+The full menu image should support pinch-to-zoom or open in a fullscreen modal.
+
+---
+
+# Gallery
+
+Display gallery images in:
+
+* 2 columns on mobile
+* 3 columns on tablets
+* 4 columns on desktop
+
+---
+
+# Branch Cards
+
+Stack vertically.
+
+Include:
+
+Photo
+
+Address
+
+Call button
+
+Directions button
+
+---
+
+# Reviews
+
+Display one review at a time on mobile with swipe support.
+
+---
+
+# Animations
+
+Keep animations smooth and lightweight.
+
+Reduce heavy animations on slower devices.
+
+Respect the user's "Reduce Motion" accessibility preference.
+
+---
+
+# Performance
+
+Optimize for mobile performance.
+
+Compress images appropriately while preserving quality.
+
+Lazy-load below-the-fold images.
+
+Target a Lighthouse mobile performance score of **90+**.
+
+---
+
+# Accessibility
+
+Buttons must be thumb-friendly.
+
+Readable contrast.
+
+Keyboard navigation.
+
+ARIA labels.
+
+Large tap areas.
+
+---
+
+# Testing Requirements
+
+Before considering the website complete, test it in responsive mode on:
+
+* iPhone SE
+* iPhone 15 Pro
+* Samsung Galaxy S24
+* Google Pixel 8
+* iPad
+* Desktop
+
+Fix any overflow, clipping, spacing, alignment, or responsiveness issues before finalizing.
+
+---
+
+# Final Mobile Rule
+
+Do **not** simply shrink the desktop layout.
+
+Design a **dedicated mobile experience** that feels premium, fast, intuitive, and encourages users to place an order quickly.
+
+---
+
+## One more instruction I'd add
+
+Since your business depends on customers ordering quickly, include this as well:
+
+> **Every section should answer one question: "Does this help a mobile user decide to order?" If a section adds clutter or slows the experience, simplify or redesign it while preserving the premium look. The mobile experience should be as polished as the desktop version.**
+
+This aligns perfectly with the quality standard you've set for the Seven Guys website.

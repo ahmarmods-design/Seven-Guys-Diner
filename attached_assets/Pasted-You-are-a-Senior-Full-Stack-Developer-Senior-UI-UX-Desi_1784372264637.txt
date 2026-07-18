@@ -1,0 +1,503 @@
+You are a Senior Full Stack Developer, Senior UI/UX Designer, Restaurant Branding Expert, SEO Expert, Performance Engineer, Accessibility Specialist, and Creative Director.
+
+Your task is to build the official website for Seven Guys Pizza & Burger.
+
+Do NOT generate a template.
+
+Build a production-ready premium website.
+
+BUSINESS INFORMATION
+
+Restaurant Name
+
+Seven Guys Pizza & Burger
+
+Tagline
+
+Gujranwala's Home of Detroit Pizza
+
+Country
+
+Pakistan
+
+City
+
+Gujranwala
+
+Delivery
+
+Available All Over Gujranwala
+
+Business Hours
+
+2:00 PM – 2:00 AM Daily
+
+Phone
+
+0319-4800036
+
+Ordering
+
+Restaurant accepts orders directly by phone and WhatsApp. There are no third-party delivery platforms.
+
+Email
+
+Not available.
+
+SOCIAL MEDIA
+
+Instagram
+
+https://www.instagram.com/sevenguys.pk
+
+TikTok
+
+https://www.tiktok.com/@sevenguys.pk
+
+Facebook
+
+https://www.facebook.com/share/193gwFL6sc/
+
+BRANCHES
+Branch 1
+
+Sialkot Road
+
+Jugna Bazar
+
+Gujranwala
+
+Google Plus Code
+
+56R6+C9
+
+Branch 2
+
+Mumtaz Market
+
+Civil Lines
+
+Gujranwala
+
+Google Plus Code
+
+55JM+6H
+
+Branch 3
+
+Kings Mall
+
+Judicial Housing Colony
+
+Gujranwala
+
+Google Plus Code
+
+453Q+2R
+
+WEBSITE STYLE
+
+The website must look like a premium international restaurant brand.
+
+Inspiration:
+
+Apple
+
+Five Guys
+
+Domino's
+
+Pizza Hut
+
+KFC
+
+Modern SaaS websites
+
+Luxury restaurant landing pages
+
+It must NOT look like a WordPress theme.
+
+It must NOT look generic.
+
+DESIGN
+
+Theme
+
+Luxury + Modern Fast Food
+
+Primary Color
+
+White
+
+Secondary Color
+
+Premium Green
+
+Accent
+
+Gold
+
+Background
+
+Very light warm white
+
+Cards
+
+Rounded
+
+Soft shadows
+
+Hover animation
+
+Premium spacing
+
+Glass effects where appropriate
+
+TYPOGRAPHY
+
+Headings
+
+Poppins ExtraBold
+
+Body
+
+Inter
+
+Buttons
+
+SemiBold
+
+WEBSITE STRUCTURE
+
+Single-page scrolling homepage with smooth navigation.
+
+Sections:
+
+Sticky Navbar
+Hero
+Featured Deals
+Signature Detroit Pizza
+Burgers
+Loaded Fries
+Wings
+Interactive Menu
+Full Menu Image
+Gallery
+Branches
+Customer Reviews
+FAQ
+Contact
+Footer
+HERO SECTION
+
+100vh.
+
+Large Detroit Pizza image on the right.
+
+Left side contains:
+
+Headline
+
+Description
+
+Rating
+
+Opening Hours
+
+Delivery
+
+Order Now button
+
+View Menu button
+
+The pizza image should overlap slightly outside its container for a premium effect.
+
+Background should include subtle green gradients and soft lighting.
+
+NAVBAR
+
+Sticky.
+
+Transparent initially.
+
+Turns white with shadow on scroll.
+
+Contains:
+
+Logo
+
+Home
+
+Menu
+
+Deals
+
+Gallery
+
+Branches
+
+Reviews
+
+Contact
+
+Order Now button
+
+FEATURED DEALS
+
+Premium cards.
+
+Hover animation.
+
+Price badges.
+
+Order button.
+
+DETROIT PIZZA SECTION
+
+Large premium cards.
+
+High-quality food photography.
+
+Name
+
+Short description
+
+Price
+
+Order button
+
+Hover lift animation
+
+BURGERS
+
+Premium horizontal showcase.
+
+LOADED FRIES
+
+Large image.
+
+Premium background.
+
+WINGS
+
+Premium product card.
+
+MENU
+
+Interactive categories.
+
+Pizza
+
+Burgers
+
+Fries
+
+Wings
+
+Drinks
+
+Desserts
+
+Also provide a button to view the uploaded menu image.
+
+GALLERY
+
+Real uploaded restaurant images only.
+
+Food
+
+Restaurant
+
+Kitchen
+
+Customers
+
+No stock images.
+
+BRANCHES
+
+Three premium cards.
+
+Photo
+
+Address
+
+Google Maps button
+
+Call button
+
+Open badge
+
+REVIEWS
+
+Google-style cards.
+
+Star rating.
+
+Smooth slider.
+
+CONTACT
+
+Phone
+
+WhatsApp
+
+Social media
+
+Branches
+
+Opening hours
+
+FOOTER
+
+Premium dark green.
+
+Logo
+
+Quick links
+
+Opening hours
+
+Social media
+
+Copyright
+
+ANIMATIONS
+
+Framer Motion.
+
+Fade Up
+
+Slide Left
+
+Slide Right
+
+Hover
+
+Image Zoom
+
+Floating Hero Pizza
+
+Smooth scrolling
+
+No excessive animations.
+
+MOBILE DESIGN
+
+Mobile-first.
+
+Thumb-friendly.
+
+Sticky Order button.
+
+Fast loading.
+
+Optimized spacing.
+
+PERFORMANCE
+
+Lighthouse score above 95.
+
+Lazy loading.
+
+Image optimization.
+
+Code splitting.
+
+Fast navigation.
+
+SEO
+
+Local SEO.
+
+Restaurant schema.
+
+Meta title.
+
+Meta description.
+
+Open Graph.
+
+Twitter Cards.
+
+Alt tags.
+
+Semantic HTML.
+
+XML sitemap.
+
+robots.txt.
+
+ACCESSIBILITY
+
+Keyboard navigation.
+
+Screen reader support.
+
+Proper contrast.
+
+ARIA labels.
+
+ASSETS
+
+The user will upload:
+
+Logo
+
+Menu
+
+Pizza photos
+
+Burger photos
+
+Fries photos
+
+Wings photos
+
+Branch photos
+
+Restaurant photos
+
+Use uploaded assets.
+
+Do NOT use stock images if uploaded assets exist.
+
+CODING RULES
+
+Generate clean production-ready code.
+
+Use reusable components.
+
+Never generate placeholder content.
+
+Never use Lorem Ipsum.
+
+Never use Coming Soon.
+
+Never break responsive design.
+
+Never redesign the project unless instructed.
+
+QUALITY STANDARD
+
+Every section must satisfy:
+
+✔ Premium appearance
+
+✔ Trustworthy
+
+✔ Makes people hungry
+
+✔ Encourages ordering
+
+✔ Mobile responsive
+
+✔ Fast
+
+✔ SEO optimized
+
+✔ Beautiful animations
+
+✔ Consistent branding
+
+✔ Production-ready
