@@ -12,6 +12,8 @@ import { Reviews } from "@/components/Reviews";
 import { FAQ } from "@/components/FAQ";
 import { ContactAndFooter } from "@/components/ContactAndFooter";
 import { FloatingWhatsApp, MobileStickyOrder } from "@/components/FloatingWhatsApp";
+import { BranchPickerModal } from "@/components/BranchPickerModal";
+import { BranchProvider } from "@/context/BranchContext";
 
 function Head() {
   useEffect(() => {
@@ -37,26 +39,29 @@ function Head() {
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-background font-sans selection:bg-secondary selection:text-primary pb-20 md:pb-0">
-      <Head />
-      <Navbar />
-      
-      <main>
-        <Hero />
-        <Deals />
-        <PizzaSection />
-        <BurgerSection />
-        <FriesAndWings />
-        <MenuSection />
-        <Gallery />
-        <Branches />
-        <Reviews />
-        <FAQ />
-      </main>
+    <BranchProvider>
+      <div className="min-h-screen bg-background font-sans selection:bg-secondary selection:text-primary pb-20 md:pb-0">
+        <Head />
+        <Navbar />
 
-      <ContactAndFooter />
-      <FloatingWhatsApp />
-      <MobileStickyOrder />
-    </div>
+        <main>
+          <Hero />
+          <Deals />
+          <PizzaSection />
+          <BurgerSection />
+          <FriesAndWings />
+          <MenuSection />
+          <Gallery />
+          <Branches />
+          <Reviews />
+          <FAQ />
+        </main>
+
+        <ContactAndFooter />
+        <FloatingWhatsApp />
+        <MobileStickyOrder />
+        <BranchPickerModal />
+      </div>
+    </BranchProvider>
   );
 }

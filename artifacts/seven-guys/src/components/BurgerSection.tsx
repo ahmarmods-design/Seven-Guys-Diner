@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import burgerImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.26_PM_(2)_1784372637543.jpeg";
+import { useBranch } from "@/context/BranchContext";
 
 const burgers = [
   { name: "Super Zinger Burger", price: "460" },
@@ -10,6 +11,7 @@ const burgers = [
 ];
 
 export function BurgerSection() {
+  const { openOrderModal } = useBranch();
   return (
     <section className="py-24 bg-primary text-white overflow-hidden relative">
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-secondary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
@@ -61,15 +63,17 @@ export function BurgerSection() {
                   <span className="font-heading font-bold text-xl">{burger.name}</span>
                   <div className="flex items-center gap-4">
                     <span className="font-bold text-xl">Rs. {burger.price}</span>
-                    <Button 
-                      size="sm" 
+                    <Button
+                      size="sm"
                       variant={burger.highlight ? "default" : "secondary"}
                       className="rounded-full px-6"
-                      asChild
+                      onClick={() =>
+                        openOrderModal(
+                          `Hi! I'd like to order a ${burger.name} (Rs. ${burger.price}).`
+                        )
+                      }
                     >
-                      <a href={`https://wa.me/923194800036?text=I'd like to order a ${burger.name}`} target="_blank" rel="noreferrer">
-                        Add
-                      </a>
+                      Add
                     </Button>
                   </div>
                 </div>

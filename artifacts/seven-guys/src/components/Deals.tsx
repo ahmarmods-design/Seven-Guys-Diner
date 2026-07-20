@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { useBranch } from "@/context/BranchContext";
 
 const deals = [
   {
@@ -37,6 +38,7 @@ const deals = [
 ];
 
 export function Deals() {
+  const { openOrderModal } = useBranch();
   return (
     <section id="deals" className="py-24 bg-gray-50">
       <div className="container mx-auto px-4 md:px-6">
@@ -85,14 +87,16 @@ export function Deals() {
                   <span className="text-lg align-top mr-1">Rs.</span>
                   {deal.price}
                 </div>
-                <Button 
-                  variant={deal.color === 'bg-secondary' ? 'default' : 'white'} 
+                <Button
+                  variant={deal.color === 'bg-secondary' ? 'default' : 'white'}
                   className="w-full text-lg shadow-lg"
-                  asChild
+                  onClick={() =>
+                    openOrderModal(
+                      `Hi! I'd like to order Deal ${deal.id} — ${deal.name} (Rs. ${deal.price})`
+                    )
+                  }
                 >
-                  <a href={`https://wa.me/923194800036?text=I'd like to order Deal ${deal.id} (${deal.name})`} target="_blank" rel="noreferrer">
-                    Order Now
-                  </a>
+                  Order Now
                 </Button>
               </div>
             </motion.div>

@@ -2,8 +2,10 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Star, Clock, MapPin, MessageCircle } from "lucide-react";
 import heroPizzaImg from "@assets/WhatsApp_Image_2026-07-18_at_9.41.06_PM_1784390466550.jpeg";
+import { useBranch } from "@/context/BranchContext";
 
 export function Hero() {
+  const { openOrderModal } = useBranch();
   return (
     <section id="home" className="relative min-h-[100dvh] flex items-center pt-24 overflow-hidden bg-[#0A2612]">
       {/* Decorative background elements */}
@@ -51,10 +53,12 @@ export function Hero() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 mt-6">
-              <Button size="lg" className="text-lg bg-[#25D366] hover:bg-[#20bd5a] text-white border-none" asChild>
-                <a href="https://wa.me/923194800036" target="_blank" rel="noreferrer">
-                  <MessageCircle className="mr-2" /> Order on WhatsApp
-                </a>
+              <Button
+                size="lg"
+                className="text-lg bg-[#25D366] hover:bg-[#20bd5a] text-white border-none"
+                onClick={() => openOrderModal("Hi! I'd like to place an order.")}
+              >
+                <MessageCircle className="mr-2" /> Order on WhatsApp
               </Button>
               <Button size="lg" variant="white" asChild>
                 <a href="#menu">View Full Menu</a>

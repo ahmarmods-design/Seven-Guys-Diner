@@ -2,8 +2,10 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import loadedFriesImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.24_PM_1784372710689.jpeg";
 import wingsImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.23_PM_(1)_1784372623994.jpeg";
+import { useBranch } from "@/context/BranchContext";
 
 export function FriesAndWings() {
+  const { openOrderModal } = useBranch();
   return (
     <section className="py-24 bg-gray-50 overflow-hidden">
       <div className="container mx-auto px-4 md:px-6">
@@ -23,10 +25,13 @@ export function FriesAndWings() {
             <p className="text-muted-foreground text-lg mb-8 max-w-lg">
               Crispy, golden fries completely smothered in our signature creamy cheese sauce, topped with grilled chicken chunks, olives, jalapeños, and bell peppers. Served hot in a premium aluminum tray. It's a meal on its own.
             </p>
-            <Button size="lg" asChild>
-              <a href="https://wa.me/923194800036?text=I'd like to order the Loaded Fries" target="_blank" rel="noreferrer">
-                Order Loaded Fries
-              </a>
+            <Button
+              size="lg"
+              onClick={() =>
+                openOrderModal("Hi! I'd like to order the Loaded Fries (Rs. 600).")
+              }
+            >
+              Order Loaded Fries
             </Button>
             
             <div className="mt-8 space-y-3 pt-8 border-t border-gray-200">
@@ -99,10 +104,15 @@ export function FriesAndWings() {
                 <span className="bg-red-100 text-red-800 px-3 py-1 rounded-md text-sm font-medium">Peri Peri Hot</span>
                 <span className="bg-orange-100 text-orange-800 px-3 py-1 rounded-md text-sm font-medium">Plain Hot</span>
               </div>
-              <Button className="w-full" asChild>
-                <a href="https://wa.me/923194800036?text=I'd like to order a Wings Bucket" target="_blank" rel="noreferrer">
-                  Order Bucket
-                </a>
+              <Button
+                className="w-full"
+                onClick={() =>
+                  openOrderModal(
+                    "Hi! I'd like to order a Wings Bucket (10pcs — Rs. 680)."
+                  )
+                }
+              >
+                Order Bucket
               </Button>
             </div>
 

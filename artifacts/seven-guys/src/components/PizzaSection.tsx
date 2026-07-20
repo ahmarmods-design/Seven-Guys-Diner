@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import heroPizzaImg from "@assets/WhatsApp_Image_2026-07-18_at_9.41.06_PM_1784390466550.jpeg";
 import menuPizzaImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.25_PM_(1)_1784372614314.jpeg";
+import { useBranch } from "@/context/BranchContext";
 
 const pizzas = [
   {
@@ -39,6 +40,7 @@ const pizzas = [
 ];
 
 export function PizzaSection() {
+  const { openOrderModal } = useBranch();
   return (
     <section className="py-24 bg-white relative overflow-hidden">
       <div className="container mx-auto px-4 md:px-6">
@@ -92,10 +94,15 @@ export function PizzaSection() {
                     <span className="font-bold text-lg leading-none">Rs. 1399 <span className="text-xs text-muted-foreground font-normal">L</span></span>
                     <span className="font-medium text-sm text-muted-foreground">Rs. 650 <span className="text-xs">M</span></span>
                   </div>
-                  <Button size="sm" asChild>
-                    <a href={`https://wa.me/923194800036?text=I'd like to order a ${pizza.name} Detroit Pizza`} target="_blank" rel="noreferrer">
-                      Order
-                    </a>
+                  <Button
+                    size="sm"
+                    onClick={() =>
+                      openOrderModal(
+                        `Hi! I'd like to order a ${pizza.name} Detroit Square Pizza.`
+                      )
+                    }
+                  >
+                    Order
                   </Button>
                 </div>
               </div>

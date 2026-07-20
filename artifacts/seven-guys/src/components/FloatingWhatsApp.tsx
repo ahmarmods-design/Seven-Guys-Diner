@@ -1,4 +1,5 @@
 import { SiWhatsapp } from "react-icons/si";
+import { useBranch } from "@/context/BranchContext";
 
 export function FloatingWhatsApp() {
   return (
@@ -19,17 +20,16 @@ export function FloatingWhatsApp() {
 }
 
 export function MobileStickyOrder() {
+  const { openOrderModal } = useBranch();
   return (
     <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 p-3 shadow-[0_-10px_20px_rgba(0,0,0,0.05)]">
-      <a
-        href="https://wa.me/923194800036"
-        target="_blank"
-        rel="noreferrer"
-        className="w-full bg-[#25D366] text-white h-12 rounded-full font-bold flex items-center justify-center gap-2 shadow-md"
+      <button
+        onClick={() => openOrderModal("Hi! I'd like to place an order.")}
+        className="w-full bg-[#25D366] text-white h-12 rounded-full font-bold flex items-center justify-center gap-2 shadow-md active:scale-[0.98] transition-transform"
       >
         <SiWhatsapp size={20} />
         Order on WhatsApp
-      </a>
+      </button>
     </div>
   );
 }
