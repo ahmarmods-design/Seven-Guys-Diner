@@ -21,6 +21,14 @@ const WINGS_SIZES = [
 
 type WingsSize = (typeof WINGS_SIZES)[number];
 
+const WINGS_FLAVORS = [
+  { label: "Thai Sweet Chillies", color: "gray"   },
+  { label: "Peri Peri Hot",       color: "red"    },
+  { label: "Plain Hot",           color: "orange" },
+] as const;
+
+type WingsFlavor = (typeof WINGS_FLAVORS)[number];
+
 export function FriesAndWings() {
   const { openOrderModal } = useBranch();
 
@@ -29,6 +37,9 @@ export function FriesAndWings() {
 
   // Wings size selection — default to Bucket (10pcs)
   const [wingsSize, setWingsSize] = useState<WingsSize>(WINGS_SIZES[1]);
+
+  // Wings flavor selection — default to Thai Sweet Chillies
+  const [wingsFlav, setWingsFlav] = useState<WingsFlavor>(WINGS_FLAVORS[0]);
 
   return (
     <section className="py-24 bg-gray-50 overflow-hidden">
@@ -205,27 +216,47 @@ export function FriesAndWings() {
                 </span>
               </div>
 
-              {/* Flavor chips */}
+              {/* Flavor selector */}
               <p className="text-sm text-muted-foreground mb-3 font-medium">
                 Choose your flavor:
               </p>
-              <div className="flex flex-wrap gap-2 mb-6">
-                <span className="bg-gray-100 px-3 py-1 rounded-md text-sm font-medium">
-                  Thai Sweet Chillies
-                </span>
-                <span className="bg-red-100 text-red-800 px-3 py-1 rounded-md text-sm font-medium">
-                  Peri Peri Hot
-                </span>
-                <span className="bg-orange-100 text-orange-800 px-3 py-1 rounded-md text-sm font-medium">
-                  Plain Hot
-                </span>
+              <div
+                className="flex flex-wrap gap-2 mb-6"
+                role="group"
+                aria-label="Select wings flavor"
+              >
+                {WINGS_FLAVORS.map((flav) => {
+                  const active = wingsFlav.label === flav.label;
+                  const inactiveColor =
+                    flav.color === "red"
+                      ? "bg-red-100 text-red-800 hover:bg-red-200 border border-red-100"
+                      : flav.color === "orange"
+                      ? "bg-orange-100 text-orange-800 hover:bg-orange-200 border border-orange-100"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-100";
+                  return (
+                    <button
+                      key={flav.label}
+                      type="button"
+                      onClick={() => setWingsFlav(flav)}
+                      aria-pressed={active}
+                      className={`px-4 py-2 rounded-full text-sm font-bold transition-all duration-150 select-none
+                        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A2612] focus-visible:ring-offset-1
+                        ${active
+                          ? "bg-[#0A2612] text-white shadow-md border border-[#0A2612]"
+                          : inactiveColor
+                        }`}
+                    >
+                      {flav.label}
+                    </button>
+                  );
+                })}
               </div>
 
               <Button
                 className="w-full"
                 onClick={() =>
                   openOrderModal(
-                    `Hi! I'd like to order Wings — ${wingsSize.label} (${wingsSize.desc} — Rs. ${wingsSize.price}).`
+                    `Hi! I'd like to order Wings — ${wingsSize.label} (${wingsSize.desc} — Rs. ${wingsSize.price}), flavor: ${wingsFlav.label}.`
                   )
                 }
               >
