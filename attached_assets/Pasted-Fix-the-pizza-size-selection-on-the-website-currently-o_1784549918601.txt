@@ -1,0 +1,47 @@
+Fix the pizza size selection on the website — currently on menu cards, 
+"Medium" and "Large" sizes are shown but Medium is not clickable/selectable, 
+only Large works. Also, the selected size + price is not being carried 
+through into WhatsApp orders.
+
+CONTEXT: Menu items live in /data/menu.json — each item has a `prices` 
+array like:
+  "prices": [
+    { "size": "Medium", "price": 650 },
+    { "size": "Large", "price": 1399 }
+  ]
+Cart logic is in CartContext (addItem takes itemId, name, size, price, 
+quantity). WhatsApp message building is wherever the order message gets 
+constructed before opening wa.me.
+
+TASK:
+
+1. On every menu item card (Menu page, Home page "Signature Detroit Pizza" 
+   section, Wings Bucket section, anywhere a pizza/wings item is displayed 
+   with sizes), render ALL sizes from that item's `prices` array as 
+   properly clickable/selectable options — not just the last one. Use a 
+   simple toggle/pill button group (e.g. "Medium — Rs. 650" | "Large — 
+   Rs. 1399"), with one selected by default (first size) and a clear 
+   visual state (active/inactive) showing which is currently selected.
+
+2. When a size is selected, the displayed price on the card must update to 
+   match that size's price immediately.
+
+3. The "Add to Cart" button on each card must pass the CURRENTLY SELECTED 
+   size and its correct price into CartContext's addItem() — not a 
+   hardcoded or default size.
+
+4. In the cart drawer/checkout, make sure each line item clearly shows its 
+   size (e.g. "Double Beast (Medium) x1 — Rs. 650") so the customer can 
+   verify before ordering.
+
+5. Make sure the WhatsApp order message includes the size next to every 
+   item, exactly matching what's in the cart (e.g. "2x Double Beast 
+   (Medium) — Rs. 1300").
+
+6. Test with at least 2 items (one pizza, one wings bucket) to confirm: 
+   selecting Medium vs Large on the card updates price, adds correct size 
+   to cart, and correct size appears in the final WhatsApp message.
+
+Do not change branch-selection or any other unrelated logic — only fix 
+size selection and make sure size + price data flows correctly end-to-end 
+from card → cart → WhatsApp message.
