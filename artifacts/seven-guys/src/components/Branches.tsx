@@ -4,7 +4,7 @@ import { MapPin, Phone, Clock, Navigation } from "lucide-react";
 
 import branch1Img from "@assets/WhatsApp_Image_2026-07-20_at_6.32.38_PM_1784550819503.jpeg"; // Jugna Bazar branch exterior
 import branch2Img from "@assets/WhatsApp_Image_2026-07-20_at_5.57.16_PM_1784550853058.jpeg";   // Civil Lines branch exterior
-import branch3Img from "@assets/WhatsApp_Image_2026-07-18_at_4.48.23_PM_1784372660439.jpeg";   // Interior 1
+import branch3Img from "@assets/WhatsApp_Image_2026-07-20_at_6.02.44_PM_1784550921230.jpeg";   // Kings Mall branch exterior
 
 const branches = [
   {
