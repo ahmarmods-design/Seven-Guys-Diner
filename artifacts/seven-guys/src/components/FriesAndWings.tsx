@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import loadedFriesImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.24_PM_1784372710689.jpeg";
 import wingsImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.23_PM_(1)_1784372623994.jpeg";
-import { useBranch } from "@/context/BranchContext";
+import { useCart } from "@/context/CartContext";
 
 const FRIES_OPTIONS = [
   { label: "Loaded Fries",    price: 600 },
@@ -30,7 +31,7 @@ const WINGS_FLAVORS = [
 type WingsFlavor = (typeof WINGS_FLAVORS)[number];
 
 export function FriesAndWings() {
-  const { openOrderModal } = useBranch();
+  const { addItem } = useCart();
 
   // Fries option — default to Loaded Fries (Rs. 600)
   const [friesOption, setFriesOption] = useState<FriesOption>(FRIES_OPTIONS[0]);
@@ -109,12 +110,16 @@ export function FriesAndWings() {
             <Button
               size="lg"
               onClick={() =>
-                openOrderModal(
-                  `Hi! I'd like to order ${friesOption.label} (Rs. ${friesOption.price}).`
-                )
+                addItem({
+                  id: `fries|${friesOption.label}`,
+                  name: friesOption.label,
+                  variant: "Fries",
+                  price: friesOption.price,
+                })
               }
             >
-              Order {friesOption.label}
+              <ShoppingCart size={16} className="mr-2" />
+              Add to Cart
             </Button>
           </motion.div>
 
@@ -255,12 +260,16 @@ export function FriesAndWings() {
               <Button
                 className="w-full"
                 onClick={() =>
-                  openOrderModal(
-                    `Hi! I'd like to order Wings — ${wingsSize.label} (${wingsSize.desc} — Rs. ${wingsSize.price}), flavor: ${wingsFlav.label}.`
-                  )
+                  addItem({
+                    id: `wings|${wingsSize.label}|${wingsFlav.label}`,
+                    name: "Wings",
+                    variant: `${wingsSize.label} (${wingsSize.desc}) · ${wingsFlav.label}`,
+                    price: wingsSize.price,
+                  })
                 }
               >
-                Order Wings
+                <ShoppingCart size={16} className="mr-2" />
+                Add to Cart
               </Button>
             </div>
 

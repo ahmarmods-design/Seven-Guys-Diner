@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroPizzaImg from "@assets/WhatsApp_Image_2026-07-18_at_9.41.06_PM_1784390466550.jpeg";
 import menuPizzaImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.25_PM_(1)_1784372614314.jpeg";
-import { useBranch } from "@/context/BranchContext";
+import { useCart } from "@/context/CartContext";
 
 const PIZZA_SIZES = [
   { label: "Medium", short: "M", price: 650 },
@@ -51,18 +52,16 @@ const pizzas = [
 function PizzaCard({
   pizza,
   index,
-  openOrderModal,
 }: {
   pizza: (typeof pizzas)[number];
   index: number;
-  openOrderModal: (msg: string) => void;
 }) {
+  const { addItem } = useCart();
   // Default to Large — the "hero" price shown in marketing
   const [selectedSize, setSelectedSize] = useState<PizzaSize>(PIZZA_SIZES[1]);
 
   return (
     <motion.div
-      key={index}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -103,7 +102,8 @@ function PizzaCard({
                 key={size.label}
                 onClick={() => setSelectedSize(size)}
                 aria-pressed={active}
-                className={`flex-1 py-2 rounded-full text-sm font-bold transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A2612] focus-visible:ring-offset-1
+                className={`flex-1 py-2 rounded-full text-sm font-bold transition-all duration-150
+                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A2612] focus-visible:ring-offset-1
                   ${active
                     ? "bg-[#0A2612] text-white shadow-md"
                     : "bg-gray-100 text-gray-600 hover:bg-gray-200"
@@ -115,7 +115,7 @@ function PizzaCard({
           })}
         </div>
 
-        {/* Dynamic price + Order button */}
+        {/* Price + Add to Cart */}
         <div className="flex items-center justify-between">
           <div>
             <span className="font-heading font-black text-2xl text-primary">
@@ -128,12 +128,16 @@ function PizzaCard({
           <Button
             size="sm"
             onClick={() =>
-              openOrderModal(
-                `Hi! I'd like to order a ${pizza.name} Detroit Square Pizza (${selectedSize.label} — Rs. ${selectedSize.price}).`
-              )
+              addItem({
+                id: `pizza|${pizza.name}|${selectedSize.label}`,
+                name: `${pizza.name} Pizza`,
+                variant: selectedSize.label,
+                price: selectedSize.price,
+              })
             }
           >
-            Order
+            <ShoppingCart size={14} className="mr-1.5" />
+            Add
           </Button>
         </div>
       </div>
@@ -143,8 +147,6 @@ function PizzaCard({
 
 // ── Section ─────────────────────────────────────────────────────────────────
 export function PizzaSection() {
-  const { openOrderModal } = useBranch();
-
   return (
     <section className="py-24 bg-white relative overflow-hidden">
       <div className="container mx-auto px-4 md:px-6">
@@ -169,12 +171,7 @@ export function PizzaSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {pizzas.map((pizza, index) => (
-            <PizzaCard
-              key={pizza.name}
-              pizza={pizza}
-              index={index}
-              openOrderModal={openOrderModal}
-            />
+            <PizzaCard key={pizza.name} pizza={pizza} index={index} />
           ))}
         </div>
       </div>

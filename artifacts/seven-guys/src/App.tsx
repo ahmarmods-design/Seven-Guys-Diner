@@ -14,6 +14,8 @@ import { ContactAndFooter } from "@/components/ContactAndFooter";
 import { FloatingWhatsApp, MobileStickyOrder } from "@/components/FloatingWhatsApp";
 import { BranchPickerModal } from "@/components/BranchPickerModal";
 import { BranchProvider } from "@/context/BranchContext";
+import { CartProvider } from "@/context/CartContext";
+import { CartDrawer } from "@/components/CartDrawer";
 
 function Head() {
   useEffect(() => {
@@ -39,6 +41,7 @@ function Head() {
 
 export default function App() {
   return (
+    <CartProvider>
     <BranchProvider>
       <div className="min-h-screen bg-background font-sans selection:bg-secondary selection:text-primary pb-20 md:pb-0">
         <Head />
@@ -61,7 +64,9 @@ export default function App() {
         <FloatingWhatsApp />
         <MobileStickyOrder />
         <BranchPickerModal />
+        <CartDrawer />
       </div>
     </BranchProvider>
+    </CartProvider>
   );
 }

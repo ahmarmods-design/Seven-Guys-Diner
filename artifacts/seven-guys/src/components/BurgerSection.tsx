@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
+import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import burgerImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.26_PM_(2)_1784372637543.jpeg";
-import { useBranch } from "@/context/BranchContext";
+import { useCart } from "@/context/CartContext";
 
 const burgers = [
   { name: "Super Zinger Burger", price: "460" },
@@ -11,7 +12,7 @@ const burgers = [
 ];
 
 export function BurgerSection() {
-  const { openOrderModal } = useBranch();
+  const { addItem } = useCart();
   return (
     <section className="py-24 bg-primary text-white overflow-hidden relative">
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-secondary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
@@ -66,13 +67,17 @@ export function BurgerSection() {
                     <Button
                       size="sm"
                       variant={burger.highlight ? "default" : "secondary"}
-                      className="rounded-full px-6"
+                      className="rounded-full px-5"
                       onClick={() =>
-                        openOrderModal(
-                          `Hi! I'd like to order a ${burger.name} (Rs. ${burger.price}).`
-                        )
+                        addItem({
+                          id: `burger|${burger.name}`,
+                          name: burger.name,
+                          variant: "",
+                          price: parseInt(burger.price),
+                        })
                       }
                     >
+                      <ShoppingCart size={14} className="mr-1.5" />
                       Add
                     </Button>
                   </div>

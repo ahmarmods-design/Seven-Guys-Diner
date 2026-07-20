@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
+import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useBranch } from "@/context/BranchContext";
+import { useCart } from "@/context/CartContext";
 
 const deals = [
   {
@@ -38,7 +39,7 @@ const deals = [
 ];
 
 export function Deals() {
-  const { openOrderModal } = useBranch();
+  const { addItem } = useCart();
   return (
     <section id="deals" className="py-24 bg-gray-50">
       <div className="container mx-auto px-4 md:px-6">
@@ -91,12 +92,16 @@ export function Deals() {
                   variant={deal.color === 'bg-secondary' ? 'default' : 'white'}
                   className="w-full text-lg shadow-lg"
                   onClick={() =>
-                    openOrderModal(
-                      `Hi! I'd like to order Deal ${deal.id} — ${deal.name} (Rs. ${deal.price})`
-                    )
+                    addItem({
+                      id: `deal|${deal.id}`,
+                      name: deal.name,
+                      variant: deal.items.join(", "),
+                      price: parseInt(deal.price),
+                    })
                   }
                 >
-                  Order Now
+                  <ShoppingCart size={16} className="mr-2" />
+                  Add to Cart
                 </Button>
               </div>
             </motion.div>
