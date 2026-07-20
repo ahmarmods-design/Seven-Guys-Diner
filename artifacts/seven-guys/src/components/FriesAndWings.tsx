@@ -5,6 +5,15 @@ import loadedFriesImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.24_PM_1784
 import wingsImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.23_PM_(1)_1784372623994.jpeg";
 import { useBranch } from "@/context/BranchContext";
 
+const FRIES_OPTIONS = [
+  { label: "Loaded Fries",    price: 600 },
+  { label: "Foot Long Fries", price: 680 },
+  { label: "Plain Fries",     price: 250 },
+  { label: "Regular Fries",   price: 150 },
+] as const;
+
+type FriesOption = (typeof FRIES_OPTIONS)[number];
+
 const WINGS_SIZES = [
   { label: "Standard", desc: "6 pcs", price: 420 },
   { label: "Bucket",   desc: "10 pcs", price: 680 },
@@ -14,6 +23,9 @@ type WingsSize = (typeof WINGS_SIZES)[number];
 
 export function FriesAndWings() {
   const { openOrderModal } = useBranch();
+
+  // Fries option — default to Loaded Fries (Rs. 600)
+  const [friesOption, setFriesOption] = useState<FriesOption>(FRIES_OPTIONS[0]);
 
   // Wings size selection — default to Bucket (10pcs)
   const [wingsSize, setWingsSize] = useState<WingsSize>(WINGS_SIZES[1]);
@@ -33,39 +45,66 @@ export function FriesAndWings() {
             <h2 className="text-4xl md:text-5xl font-heading font-extrabold text-primary mb-4">
               LOADED <span className="text-secondary">FRIES</span>
             </h2>
-            <div className="text-2xl font-bold text-primary mb-6">Rs. 600</div>
-            <p className="text-muted-foreground text-lg mb-8 max-w-lg">
+
+            {/* Dynamic price */}
+            <div className="font-heading font-black text-3xl text-primary mb-4">
+              Rs. {friesOption.price}
+              <span className="text-base font-normal text-muted-foreground ml-2">
+                {friesOption.label}
+              </span>
+            </div>
+
+            <p className="text-muted-foreground text-lg mb-6 max-w-lg">
               Crispy, golden fries completely smothered in our signature creamy
               cheese sauce, topped with grilled chicken chunks, olives,
               jalapeños, and bell peppers. Served hot in a premium aluminum
               tray. It's a meal on its own.
             </p>
+
+            {/* Fries option selector */}
+            <div className="mb-6">
+              <p className="text-sm font-medium text-muted-foreground mb-3">
+                Choose your option:
+              </p>
+              <div
+                className="grid grid-cols-2 gap-2"
+                role="group"
+                aria-label="Select fries option"
+              >
+                {FRIES_OPTIONS.map((opt) => {
+                  const active = friesOption.label === opt.label;
+                  return (
+                    <button
+                      key={opt.label}
+                      onClick={() => setFriesOption(opt)}
+                      aria-pressed={active}
+                      className={`py-2.5 px-3 rounded-xl text-sm font-bold text-left transition-all duration-150
+                        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A2612] focus-visible:ring-offset-1
+                        ${active
+                          ? "bg-[#0A2612] text-white shadow-md"
+                          : "bg-white border border-gray-200 text-gray-700 hover:border-gray-400"
+                        }`}
+                    >
+                      <span className="block leading-tight">{opt.label}</span>
+                      <span className={`text-xs ${active ? "text-white/70" : "text-muted-foreground"}`}>
+                        Rs. {opt.price}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
             <Button
               size="lg"
               onClick={() =>
-                openOrderModal("Hi! I'd like to order the Loaded Fries (Rs. 600).")
+                openOrderModal(
+                  `Hi! I'd like to order ${friesOption.label} (Rs. ${friesOption.price}).`
+                )
               }
             >
-              Order Loaded Fries
+              Order {friesOption.label}
             </Button>
-
-            <div className="mt-8 space-y-3 pt-8 border-t border-gray-200">
-              <h4 className="font-heading font-bold text-lg text-primary">
-                Other Options
-              </h4>
-              <div className="flex justify-between text-muted-foreground">
-                <span className="font-medium">Foot Long Fries</span>
-                <span>Rs. 680</span>
-              </div>
-              <div className="flex justify-between text-muted-foreground">
-                <span className="font-medium">Plain Fries</span>
-                <span>Rs. 250</span>
-              </div>
-              <div className="flex justify-between text-muted-foreground">
-                <span className="font-medium">Regular Fries</span>
-                <span>Rs. 150</span>
-              </div>
-            </div>
           </motion.div>
 
           <motion.div

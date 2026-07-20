@@ -1,0 +1,46 @@
+Fix the option selection on the Loaded Fries item (and any other item with 
+a similar "Other Options" list) — currently the options (e.g. Foot Long 
+Fries Rs. 680, Plain Fries Rs. 250, Regular Fries Rs. 150) are just shown 
+as a static list and are NOT clickable/selectable. The price and "Order" 
+button do not update based on which option the customer wants, and the 
+selected option is not carried through into the cart or WhatsApp order 
+message.
+
+This is the same underlying issue as the pizza size selector — find any 
+other menu items in /data/menu.json that have multiple size/option 
+variants (not just pizzas) and make sure ALL of them use the same fix.
+
+TASK:
+
+1. On the Loaded Fries item page/card, turn the "Other Options" list 
+   (Foot Long Fries, Plain Fries, Regular Fries, and the main Rs. 600 
+   option) into clickable/selectable pill or button options — same pattern 
+   as the pizza size selector. One option selected by default, clear 
+   active/inactive visual state.
+
+2. When an option is selected, the displayed price at the top must update 
+   immediately to match that option's price.
+
+3. The order button ("Order Loaded Fries") must pass the CURRENTLY 
+   SELECTED option name and its correct price into CartContext's 
+   addItem() — not a hardcoded default.
+
+4. In the cart drawer/checkout, the line item must clearly show which 
+   option was chosen (e.g. "Loaded Fries (Foot Long) x1 — Rs. 680").
+
+5. The WhatsApp order message must include the selected option name next 
+   to the item, matching what's in the cart.
+
+6. Audit /data/menu.json for any other items with multiple price/size 
+   variants beyond pizzas and fries, and confirm they all use this same 
+   selectable-option pattern consistently across the site.
+
+7. Test with Loaded Fries specifically: select "Regular Fries" (Rs. 150), 
+   confirm price updates, add to cart, and confirm the cart line and 
+   WhatsApp message both correctly show "Regular Fries — Rs. 150" (not the 
+   default Rs. 600).
+
+Do not change branch-selection or any other unrelated logic — only fix 
+option/variant selection so price and choice flow correctly end-to-end 
+from card → cart → WhatsApp message, for every item that has multiple 
+options.
