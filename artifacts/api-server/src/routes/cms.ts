@@ -58,7 +58,10 @@ router.get("/cms/events", (req: Request, res: Response) => {
 });
 
 // ── GET /cms ─ return all keys as { key: value } map ─────────────────────────
+// Cache-Control: no-store prevents browsers from serving stale 304 responses.
 router.get("/cms", async (_req: Request, res: Response) => {
+  res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+  res.setHeader("Pragma", "no-cache");
   try {
     const rows = await db.select().from(cmsData);
     const result: Record<string, unknown> = {};
@@ -89,6 +92,8 @@ router.post("/cms/uploads/request-url", async (req: Request, res: Response) => {
 
 // ── GET /cms/:key ─────────────────────────────────────────────────────────────
 router.get("/cms/:key", async (req: Request, res: Response) => {
+  res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+  res.setHeader("Pragma", "no-cache");
   const key = Array.isArray(req.params.key) ? req.params.key[0] : req.params.key;
   try {
     const [row] = await db.select().from(cmsData).where(eq(cmsData.key, key));

@@ -227,7 +227,10 @@ export function CMSProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const fetchAll = async () => {
       try {
-        const res = await fetch("/api/cms");
+        // Cache-bust every request so browsers never return a stale 304.
+        const res = await fetch(`/api/cms?t=${Date.now()}`, {
+          cache: "no-store",
+        });
         if (!res.ok) { setReady(true); return; }
         const json = await res.json();
         const d = (json.data ?? {}) as Record<string, unknown>;
@@ -248,46 +251,29 @@ export function CMSProvider({ children }: { children: React.ReactNode }) {
     // Initial load.
     fetchAll();
 
-    // ── Server-Sent Events ── real-time push from server on every admin save ──
-    // Falls back to 30-second polling if SSE is unavailable.
+    // ── Primary: 3-second polling ─────────────────────────────────────────────
+    // Reliable in all proxy environments. Each request is cache-busted so the
+    // browser always gets a fresh response from the DB (no 304 stale hits).
+    const poll = setInterval(fetchAll, 3_000);
+
+    // ── Enhancement: Server-Sent Events ──────────────────────────────────────
+    // When SSE is available the website updates within ~100 ms of a save.
+    // If the Replit proxy drops the connection (common) the poll above covers it.
     let sse: EventSource | null = null;
-    let fallback: ReturnType<typeof setInterval> | null = null;
 
     const connectSSE = () => {
       try {
         sse = new EventSource("/api/cms/events");
-
-        sse.addEventListener("connected", () => {
-          // SSE is live — cancel any fallback polling.
-          if (fallback) { clearInterval(fallback); fallback = null; }
-        });
-
-        sse.addEventListener("cms-update", () => {
-          // Server just saved a change — refetch the full dataset immediately.
-          fetchAll();
-        });
-
-        sse.onerror = () => {
-          // Connection lost; clean up and start fallback polling until SSE reconnects.
-          sse?.close();
-          sse = null;
-          if (!fallback) {
-            fallback = setInterval(fetchAll, 3_000);
-          }
-          // Retry SSE after 5 seconds.
-          setTimeout(connectSSE, 5_000);
-        };
-      } catch {
-        // EventSource not supported — fall back to polling.
-        if (!fallback) fallback = setInterval(fetchAll, 3_000);
-      }
+        sse.addEventListener("cms-update", () => fetchAll());
+        sse.onerror = () => { sse?.close(); sse = null; setTimeout(connectSSE, 10_000); };
+      } catch { /* SSE not supported — polling already handles it */ }
     };
 
     connectSSE();
 
     return () => {
+      clearInterval(poll);
       sse?.close();
-      if (fallback) clearInterval(fallback);
     };
   }, []);
 
