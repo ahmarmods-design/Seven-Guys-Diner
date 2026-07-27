@@ -359,22 +359,6 @@ export function FriesAndWings() {
               </Button>
             </div>
 
-            <div className="space-y-4">
-              <h4 className="font-heading font-bold text-lg text-primary">
-                Available Flavors
-              </h4>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm text-center font-medium">
-                  Oven Baked
-                </div>
-                <div className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm text-center font-medium">
-                  Garlic Mayo
-                </div>
-                <div className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm text-center font-medium col-span-2">
-                  Spicy Mayo
-                </div>
-              </div>
-            </div>
           </motion.div>
         </div>
 
