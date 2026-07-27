@@ -1,0 +1,25 @@
+Update only the image switching functionality inside the "GOURMET BURGERS" section. Do not modify any other functionality, layout, styling, animations, colors, spacing, fonts, or components.
+
+Requirements:
+
+1. In the Gourmet Burgers section, there is currently a burger image displayed beside the burger list.
+2. Keep the existing default image exactly as it is when the page first loads.
+3. When the user clicks or selects "Super Zinger Burger", replace the current image with the Super Zinger Burger image that I have provided.
+4. When the user clicks or selects "Double Crunch Burger", replace the image with the Double Crunch Burger image that I have provided.
+5. When the user clicks or selects "Chicken Chapli Burger", replace the image with the Chicken Chapli Burger image that I have provided.
+6. When the user clicks or selects "Chicken Fillet Burger", replace the image with the Chicken Fillet Burger image that I have provided.
+7. The image must always appear in the same image container currently used in the Gourmet Burgers section. Do not create a new image container or change its position.
+8. The image should switch instantly when a burger is selected while keeping the existing popup/tab behavior unchanged.
+9. Maintain the current image size, aspect ratio, border radius, shadows, and responsive styling. Use the existing image container and responsive behavior (object-fit: contain or the current implementation).
+10. Ensure everything works perfectly on both Desktop and Mobile without breaking the current layout.
+
+Image Mapping:
+
+- Default (page load) → Keep the existing Gourmet Burger image.
+- Super Zinger Burger → Use the 1st image I provided.
+- Double Crunch Burger → Use the 2nd image I provided.
+- Chicken Chapli Burger → Use the 3rd image I provided.
+- Chicken Fillet Burger → Use the 4th image I provided.
+
+IMPORTANT:
+Only implement this image-switching behavior. Do not modify any other section of the website, do not change the popup logic, menu items, prices, buttons, animations, spacing, typography, colors, or any existing functionality. Make sure the final implementation is fully responsive and looks identical on both desktop and mobile except for the image changing based on the selected burger.

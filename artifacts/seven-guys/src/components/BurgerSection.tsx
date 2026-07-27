@@ -1,7 +1,12 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import burgerImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.26_PM_(2)_1784372637543.webp";
+import superZingerImg from "@assets/fillet_crunch_burger_1785180153667.webp";
+import doubleCrunchImg from "@assets/double_fillet_crunch_burger_1785180168942.webp";
+import chapliImg from "@assets/broast_burger_1785180182461.webp";
+import filletImg from "@assets/chicken_burger_1785180199976.webp";
 import { useCart } from "@/context/CartContext";
 
 const burgers = [
@@ -11,8 +16,17 @@ const burgers = [
   { name: "Fillet Crunch Burger", price: "300" },
 ];
 
+const burgerImageMap: Record<string, string> = {
+  "Super Zinger Burger":  superZingerImg,
+  "Double Crunch Burger": doubleCrunchImg,
+  "Chicken Chapli Burger": chapliImg,
+  "Fillet Crunch Burger": filletImg,
+};
+
 export function BurgerSection() {
   const { addItem } = useCart();
+  const [selectedBurger, setSelectedBurger] = useState<string | null>(null);
+  const currentBurgerImg = selectedBurger ? burgerImageMap[selectedBurger] : burgerImg;
   return (
     <section className="py-24 bg-primary text-white overflow-hidden relative">
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-secondary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
@@ -29,8 +43,8 @@ export function BurgerSection() {
           >
             <div className="aspect-square rounded-3xl overflow-hidden shadow-2xl border-4 border-secondary/30 relative">
               <img 
-                src={burgerImg} 
-                alt="Double Crunch Burger" 
+                src={currentBurgerImg}
+                alt={selectedBurger ?? "Double Crunch Burger"}
                 className="w-full h-full object-cover"
                 loading="lazy"
               />
@@ -59,7 +73,8 @@ export function BurgerSection() {
               {burgers.map((burger, index) => (
                 <div 
                   key={index}
-                  className={`flex items-center justify-between p-5 rounded-xl transition-colors ${burger.highlight ? 'bg-secondary text-primary' : 'bg-white/10 hover:bg-white/15'}`}
+                  onClick={() => setSelectedBurger(burger.name)}
+                  className={`flex items-center justify-between p-5 rounded-xl transition-colors cursor-pointer ${burger.highlight ? 'bg-secondary text-primary' : 'bg-white/10 hover:bg-white/15'}`}
                 >
                   <span className="font-heading font-bold text-xl">{burger.name}</span>
                   <div className="flex items-center gap-4">
