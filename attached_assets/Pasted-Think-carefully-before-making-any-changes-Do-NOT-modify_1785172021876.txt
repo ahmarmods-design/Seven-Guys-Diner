@@ -1,0 +1,244 @@
+Think carefully before making any changes.
+
+Do NOT modify the existing Hero section.
+
+Completely redesign the Hero section from scratch while preserving the current Seven Guys branding, colors, typography, logo, and call-to-action buttons.
+
+The objective is to create a world-class premium restaurant hero section that immediately creates a WOW effect within the first 3 seconds.
+
+The design must feel cinematic, luxurious, modern, immersive, and smooth.
+
+==================================================
+DESIGN STYLE
+==================================================
+
+Take inspiration from modern premium websites such as Apple, Stripe, Linear, Framer, Awwwards-winning landing pages, and high-end restaurant brands.
+
+Avoid flashy or cheap animations.
+
+Everything should feel elegant and expensive.
+
+==================================================
+LAYOUT
+==================================================
+
+Create a full-screen hero.
+
+Left Side:
+
+• Premium headline
+• Short premium description
+• Primary CTA (Order Now)
+• Secondary CTA (Explore Menu)
+
+Right Side:
+
+A large realistic premium pizza floating in 3D perspective.
+
+The pizza should become the visual focus of the page.
+
+==================================================
+PREMIUM PIZZA EXPERIENCE
+==================================================
+
+Do NOT leave the pizza static.
+
+Create a living premium experience.
+
+The pizza should:
+
+• Float slowly
+• Slightly rotate
+• Gently breathe
+• Have realistic soft shadows
+• Have subtle depth
+
+The movement must be smooth and continuous.
+
+==================================================
+MOUSE INTERACTION
+==================================================
+
+When the mouse moves:
+
+The pizza should slightly tilt in 3D.
+
+The shadow should react naturally.
+
+The movement should feel smooth and premium.
+
+No sudden movements.
+
+==================================================
+BACKGROUND
+==================================================
+
+Dark luxury background.
+
+Use subtle gradients.
+
+Add soft golden lighting.
+
+Very light floating particles.
+
+Soft radial glow behind the pizza.
+
+Everything should remain elegant.
+
+==================================================
+LIGHTING
+==================================================
+
+Add premium cinematic lighting.
+
+Very soft moving light sweep.
+
+Gentle reflections.
+
+Soft glow around the pizza.
+
+Nothing excessive.
+
+==================================================
+STEAM EFFECT
+==================================================
+
+Create a subtle realistic steam effect above the pizza.
+
+Steam should move naturally.
+
+Opacity should remain low.
+
+The effect should feel premium.
+
+==================================================
+CHEESE SHINE
+==================================================
+
+Create a subtle animated cheese shine.
+
+The cheese should occasionally catch light.
+
+The effect must be elegant.
+
+==================================================
+SCROLL EXPERIENCE
+==================================================
+
+When the user scrolls:
+
+The hero should transition beautifully.
+
+Pizza scales down smoothly.
+
+Content shifts elegantly.
+
+No abrupt movement.
+
+==================================================
+BUTTONS
+==================================================
+
+Order Now
+
+Premium hover animation.
+
+Magnetic hover effect.
+
+Soft shadow.
+
+Golden highlight.
+
+Explore Menu
+
+Elegant outline style.
+
+Smooth hover transition.
+
+==================================================
+ANIMATIONS
+==================================================
+
+Use Framer Motion.
+
+Animation timing should be premium.
+
+Everything should remain smooth at 60 FPS.
+
+Avoid excessive motion.
+
+==================================================
+PERFORMANCE
+==================================================
+
+Optimize every animation.
+
+No lag.
+
+No layout shift.
+
+Fast loading.
+
+Excellent Lighthouse performance.
+
+==================================================
+RESPONSIVE DESIGN
+==================================================
+
+Desktop:
+
+Luxury cinematic layout.
+
+Tablet:
+
+Maintain composition.
+
+Mobile:
+
+Completely redesign the layout for mobile if needed.
+
+Pizza should remain the visual focus.
+
+Buttons should stay large and easy to tap.
+
+Typography should remain beautiful.
+
+Nothing should overflow.
+
+==================================================
+DO NOT
+==================================================
+
+Do not use cheap effects.
+
+Do not over-animate.
+
+Do not use distracting backgrounds.
+
+Do not break existing branding.
+
+Do not reduce performance.
+
+==================================================
+FINAL REVIEW
+==================================================
+
+Before completing:
+
+Review the hero section like a senior UI/UX designer.
+
+Ask yourself:
+
+"Would this hero impress a restaurant owner within the first five seconds?"
+
+If the answer is no,
+
+continue improving it automatically until it feels like a premium luxury restaurant website.
+
+Finally test everything on:
+
+✅ Desktop
+✅ Tablet
+✅ Mobile
+
+Deliver production-ready code.
