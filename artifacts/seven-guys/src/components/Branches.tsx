@@ -50,55 +50,74 @@ export function Branches() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {branches.map((branch, index) => (
+            /*
+             * FIX: Framer Motion applies CSS `transform` to the animated element.
+             * Browsers (notably Safari and some Blink versions) do not correctly
+             * honour `overflow: hidden` on an element that also has a CSS transform,
+             * which can cause child images to paint outside the card boundary and
+             * visually overlap between cards.
+             *
+             * Solution: separate the animation wrapper (motion.div — carries
+             * transform/opacity, no overflow) from the card shell (inner div —
+             * carries overflow-hidden and rounded corners, no transform).
+             * Because opacity:0 on the parent makes the entire subtree invisible,
+             * the "cards fade up from below" animation is preserved exactly.
+             */
             <motion.div
               key={branch.name}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 group flex flex-col"
+              // ↑ animation only — intentionally no overflow-hidden here
             >
-              <div className="h-48 relative overflow-hidden">
-                <img
-                  src={branch.image}
-                  alt={branch.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <div className="absolute top-4 left-4 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md flex items-center gap-1">
-                  <span className="w-2 h-2 rounded-full bg-white animate-pulse"></span> Open Now
-                </div>
-              </div>
-              
-              <div className="p-6 flex-1 flex flex-col">
-                <h3 className="text-2xl font-heading font-bold text-primary mb-3">{branch.name}</h3>
-                
-                <div className="space-y-3 mb-8 flex-1">
-                  <div className="flex items-start gap-3 text-muted-foreground">
-                    <MapPin className="text-secondary shrink-0 mt-1" size={18} />
-                    <span className="text-sm leading-relaxed">{branch.address}</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-muted-foreground">
-                    <Clock className="text-secondary shrink-0" size={18} />
-                    <span className="text-sm">2:00 PM – 2:00 AM</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-muted-foreground">
-                    <Phone className="text-secondary shrink-0" size={18} />
-                    <span className="text-sm font-medium text-primary">0319-4800036</span>
+              {/* Card shell: overflow-hidden lives here, no CSS transform */}
+              <div className="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 group flex flex-col h-full">
+
+                {/* Image container: isolated overflow clip so hover-scale never escapes */}
+                <div className="h-48 relative overflow-hidden shrink-0">
+                  <img
+                    src={branch.image}
+                    alt={branch.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <div className="absolute top-4 left-4 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-white animate-pulse"></span> Open Now
                   </div>
                 </div>
 
-                <div className="flex gap-3 mt-auto">
-                  <Button variant="outline" className="flex-1" asChild>
-                    <a href={branch.mapLink} target="_blank" rel="noreferrer">
-                      <Navigation size={16} className="mr-2" /> Maps
-                    </a>
-                  </Button>
-                  <Button className="flex-1" asChild>
-                    <a href="tel:03194800036">Call</a>
-                  </Button>
+                <div className="p-6 flex-1 flex flex-col">
+                  <h3 className="text-2xl font-heading font-bold text-primary mb-3">{branch.name}</h3>
+
+                  <div className="space-y-3 mb-8 flex-1">
+                    <div className="flex items-start gap-3 text-muted-foreground">
+                      <MapPin className="text-secondary shrink-0 mt-1" size={18} />
+                      <span className="text-sm leading-relaxed">{branch.address}</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-muted-foreground">
+                      <Clock className="text-secondary shrink-0" size={18} />
+                      <span className="text-sm">2:00 PM – 2:00 AM</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-muted-foreground">
+                      <Phone className="text-secondary shrink-0" size={18} />
+                      <span className="text-sm font-medium text-primary">0319-4800036</span>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-3 mt-auto">
+                    <Button variant="outline" className="flex-1" asChild>
+                      <a href={branch.mapLink} target="_blank" rel="noreferrer">
+                        <Navigation size={16} className="mr-2" /> Maps
+                      </a>
+                    </Button>
+                    <Button className="flex-1" asChild>
+                      <a href="tel:03194800036">Call</a>
+                    </Button>
+                  </div>
                 </div>
+
               </div>
             </motion.div>
           ))}
