@@ -8,11 +8,56 @@ const ADMIN_PASSWORD = "sevenguys@7890";
 const router: IRouter = Router();
 const objectStorageService = new ObjectStorageService();
 
+// ── SSE client registry ───────────────────────────────────────────────────────
+// Keeps a set of active SSE response objects; broadcast whenever CMS data changes.
+const sseClients = new Set<Response>();
+
+function broadcastCmsUpdate(key: string) {
+  const payload = JSON.stringify({ key, ts: Date.now() });
+  for (const client of sseClients) {
+    try {
+      client.write(`event: cms-update\ndata: ${payload}\n\n`);
+    } catch {
+      sseClients.delete(client);
+    }
+  }
+}
+
 function isAdmin(req: Request): boolean {
   return req.headers["x-admin-password"] === ADMIN_PASSWORD;
 }
 
-// ── GET /cms ─ return all keys as { key: value } map ────────────────────────
+// ── GET /cms/events ─ Server-Sent Events stream ───────────────────────────────
+// Must be registered BEFORE /cms/:key so "events" is not treated as a key param.
+router.get("/cms/events", (req: Request, res: Response) => {
+  res.setHeader("Content-Type",  "text/event-stream");
+  res.setHeader("Cache-Control", "no-cache, no-transform");
+  res.setHeader("Connection",    "keep-alive");
+  res.setHeader("X-Accel-Buffering", "no"); // disable nginx buffering if proxied
+  res.flushHeaders();
+
+  // Send an initial "connected" event so the client knows the stream is live.
+  res.write("event: connected\ndata: {}\n\n");
+
+  sseClients.add(res);
+
+  // Heartbeat every 20 s — keeps the connection alive through load balancers/proxies.
+  const heartbeat = setInterval(() => {
+    try {
+      res.write(": heartbeat\n\n");
+    } catch {
+      clearInterval(heartbeat);
+      sseClients.delete(res);
+    }
+  }, 20_000);
+
+  req.on("close", () => {
+    clearInterval(heartbeat);
+    sseClients.delete(res);
+  });
+});
+
+// ── GET /cms ─ return all keys as { key: value } map ─────────────────────────
 router.get("/cms", async (_req: Request, res: Response) => {
   try {
     const rows = await db.select().from(cmsData);
@@ -24,7 +69,7 @@ router.get("/cms", async (_req: Request, res: Response) => {
   }
 });
 
-// ── POST /cms/uploads/request-url ─ presigned GCS upload (admin only) ───────
+// ── POST /cms/uploads/request-url ─ presigned GCS upload (admin only) ────────
 router.post("/cms/uploads/request-url", async (req: Request, res: Response) => {
   if (!isAdmin(req)) { res.status(401).json({ success: false, error: "Unauthorized" }); return; }
   const { name, contentType } = req.body ?? {};
@@ -42,7 +87,7 @@ router.post("/cms/uploads/request-url", async (req: Request, res: Response) => {
   }
 });
 
-// ── GET /cms/:key ────────────────────────────────────────────────────────────
+// ── GET /cms/:key ─────────────────────────────────────────────────────────────
 router.get("/cms/:key", async (req: Request, res: Response) => {
   const key = Array.isArray(req.params.key) ? req.params.key[0] : req.params.key;
   try {
@@ -54,7 +99,7 @@ router.get("/cms/:key", async (req: Request, res: Response) => {
   }
 });
 
-// ── PUT /cms/:key ─ upsert (admin only) ──────────────────────────────────────
+// ── PUT /cms/:key ─ upsert + broadcast (admin only) ───────────────────────────
 router.put("/cms/:key", async (req: Request, res: Response) => {
   if (!isAdmin(req)) { res.status(401).json({ success: false, error: "Unauthorized" }); return; }
   const key = Array.isArray(req.params.key) ? req.params.key[0] : req.params.key;
@@ -64,13 +109,17 @@ router.put("/cms/:key", async (req: Request, res: Response) => {
       .insert(cmsData)
       .values({ key, value: req.body as unknown, updatedAt: now })
       .onConflictDoUpdate({ target: cmsData.key, set: { value: req.body as unknown, updatedAt: now } });
+
+    // Notify all connected SSE clients immediately.
+    broadcastCmsUpdate(key);
+
     res.json({ success: true });
   } catch {
     res.status(500).json({ success: false, error: "Failed to save" });
   }
 });
 
-// ── GET /storage/public-objects/* ─ serve public assets ─────────────────────
+// ── GET /storage/public-objects/* ─ serve public assets ──────────────────────
 router.get("/storage/public-objects/*filePath", async (req: Request, res: Response) => {
   try {
     const raw = req.params.filePath;
@@ -89,7 +138,7 @@ router.get("/storage/public-objects/*filePath", async (req: Request, res: Respon
   }
 });
 
-// ── GET /storage/objects/* ─ serve uploaded CMS images (no auth required) ───
+// ── GET /storage/objects/* ─ serve uploaded CMS images (no auth required) ────
 router.get("/storage/objects/*path", async (req: Request, res: Response) => {
   try {
     const raw = req.params.path;
