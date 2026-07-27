@@ -2,12 +2,15 @@ import { motion } from "framer-motion";
 import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
-import { useCMS } from "@/context/CMSContext";
+import { useCMS, DEFAULT_DEALS } from "@/context/CMSContext";
 
 export function Deals() {
   const { addItem } = useCart();
-  const { deals }   = useCMS();
-  const active      = deals.filter(d => d.enabled);
+  const { deals, ready } = useCMS();
+  // If the DB is loaded but returned an empty list, fall back to the built-in
+  // defaults so the section is always visible.
+  const source = ready && deals.length === 0 ? DEFAULT_DEALS : deals;
+  const active = source.filter(d => d.enabled);
 
   return (
     <section id="deals" className="py-24 bg-gray-50">
