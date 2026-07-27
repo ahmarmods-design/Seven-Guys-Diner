@@ -83,7 +83,7 @@ function PizzaCard({ item, index }: { item: PizzaItem; index: number }) {
         <div className="flex-1 min-w-0">
           <h4 className="font-heading font-bold text-lg text-primary leading-tight">{item.name}</h4>
           {item.desc && (
-            <p className="text-xs text-muted-foreground mt-1 leading-snug">{item.desc}</p>
+            <p className="hidden md:block text-xs text-muted-foreground mt-1 leading-snug">{item.desc}</p>
           )}
         </div>
       </div>
@@ -171,7 +171,7 @@ function SimpleCard({ item, category, index }: { item: SimpleItem; category: str
       <div className="flex-1 min-w-0">
         <h4 className="font-heading font-bold text-lg text-primary leading-tight">{item.name}</h4>
         {item.desc && (
-          <p className="text-xs text-muted-foreground mt-1 leading-snug">{item.desc}</p>
+          <p className="hidden md:block text-xs text-muted-foreground mt-1 leading-snug">{item.desc}</p>
         )}
         <p className="font-heading font-black text-xl text-primary mt-2">
           Rs. {item.price.toLocaleString()}
