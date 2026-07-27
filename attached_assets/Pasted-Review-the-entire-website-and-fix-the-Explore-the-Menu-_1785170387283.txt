@@ -1,0 +1,68 @@
+Review the entire website and fix the "Explore the Menu" section completely.
+
+Current issue:
+- The Pizza, Burgers, Sides, Wings, and Drinks category cards/buttons are visible but clicking them does nothing.
+- There is no Add to Cart functionality.
+
+Tasks:
+
+1. Fix all category navigation.
+- Pizza card should open/show the Pizza menu.
+- Burgers card should open/show the Burgers menu.
+- Sides card should open/show the Sides menu.
+- Wings card should open/show the Wings menu.
+- Drinks card should open/show the Drinks menu.
+- Use smooth scrolling or section navigation with animated transitions.
+- Highlight the active category while scrolling.
+
+2. Build a complete Add to Cart system.
+- Every menu item must have an Add to Cart button.
+- Clicking Add to Cart should instantly add the item to the cart.
+- Increase quantity if the item already exists.
+- Show a floating cart icon with the total item count.
+- Display a beautiful slide-in cart drawer.
+- Allow:
+  - Increase quantity
+  - Decrease quantity
+  - Remove item
+  - Clear cart
+- Show:
+  - Item image
+  - Item name
+  - Quantity
+  - Individual price
+  - Total price
+- Persist cart using localStorage so it remains after refresh.
+
+3. Cart Checkout
+- Add a Checkout / Order on WhatsApp button.
+- Automatically generate a WhatsApp message containing:
+  - Customer order
+  - Quantity
+  - Individual prices
+  - Grand total
+- Open WhatsApp with the prefilled order.
+
+4. Animations
+- Smooth hover effects.
+- Smooth scrolling.
+- Framer Motion animations.
+- Premium transitions.
+- No lag.
+
+5. Code Quality
+- Do not break any existing functionality.
+- Preserve current design.
+- Fix all TypeScript and React issues if found.
+- Use reusable components.
+- Clean and production-ready code.
+
+6. Responsive Design (VERY IMPORTANT)
+- Verify every feature works perfectly on Desktop, Tablet, and Mobile.
+- Ensure all buttons are clickable on every screen size.
+- Cart drawer must be fully responsive.
+- Navigation must work correctly on both desktop and mobile.
+- Test every category and every Add to Cart interaction in both mobile view and desktop view before finishing.
+
+Finally:
+Review the entire implementation, fix any bugs automatically, and deliver a polished production-ready experience.

@@ -1,54 +1,176 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { ShoppingCart, ZoomIn, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import * as Dialog from "@radix-ui/react-dialog";
-import { X, ZoomIn } from "lucide-react";
 import menuPizzaImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.25_PM_(1)_1784372614314.jpeg";
 import menuBurgersImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.26_PM_1784372608349.jpeg";
+import { useCart } from "@/context/CartContext";
 
-const categories = ["Pizza", "Burgers", "Sides", "Wings", "Drinks"];
+// ── Data ──────────────────────────────────────────────────────────────────────
 
-type MenuItem = {
-  name: string;
-  price: string;
-  desc?: string;
+const CATEGORY_META: Record<string, { icon: string; label: string }> = {
+  Pizza:   { icon: "🍕", label: "Pizza" },
+  Burgers: { icon: "🍔", label: "Burgers" },
+  Sides:   { icon: "🍟", label: "Sides" },
+  Wings:   { icon: "🍗", label: "Wings" },
+  Drinks:  { icon: "🥤", label: "Drinks" },
 };
+
+const CATEGORIES = Object.keys(CATEGORY_META);
+
+type PizzaItem  = { kind: "pizza"; name: string; desc?: string; priceMed: number; priceLg: number };
+type SimpleItem = { kind: "simple"; name: string; desc?: string; price: number };
+type MenuItem   = PizzaItem | SimpleItem;
 
 const menuData: Record<string, MenuItem[]> = {
   Pizza: [
-    { name: "Double Beast", price: "L: 1399 | M: 650", desc: "Loaded with all meats and extra cheese" },
-    { name: "Detroit Fajita", price: "L: 1399 | M: 650", desc: "Chicken Fajita, jalapeño sauce" },
-    { name: "Malai Boti", price: "L: 1399 | M: 650", desc: "Creamy sauce, BBQ Malai Boti" },
-    { name: "Tandoori BBQ", price: "L: 1399 | M: 650", desc: "Kebab bites, Chicken Tikka" },
-    { name: "Hot Peri Peri", price: "L: 1399 | M: 650", desc: "Hot peri peri sauce, spicy chicken" },
-    { name: "Detroit Tikka", price: "L: 1399 | M: 650", desc: "Classic tikka flavors with Detroit crust" },
+    { kind: "pizza", name: "Double Beast",   priceMed: 650, priceLg: 1399, desc: "Chicken Tikka, Kabab, Fajita, Olives, Capsicum & Extra Cheese" },
+    { kind: "pizza", name: "Detroit Fajita", priceMed: 650, priceLg: 1399, desc: "Chicken Fajita, Onions, Capsicums, Green Jalapeño Sauce" },
+    { kind: "pizza", name: "Malai Boti",     priceMed: 650, priceLg: 1399, desc: "BBQ Malai Boti Chicken, Creamy Sauce, Onion, Black Olive" },
+    { kind: "pizza", name: "Tandoori BBQ",   priceMed: 650, priceLg: 1399, desc: "Kebab Bites, Chicken Tikka, Olives, Capsicum, Extra Cheese" },
+    { kind: "pizza", name: "Hot Peri Peri",  priceMed: 650, priceLg: 1399, desc: "Hot Peri Peri Sauce, Spicy Peri Peri Chicken, Red Jalapeño" },
+    { kind: "pizza", name: "Detroit Tikka",  priceMed: 650, priceLg: 1399, desc: "Chicken Tikka, Onion, Tomatoes, Olives, Detroit Sauce" },
   ],
   Burgers: [
-    { name: "Super Zinger Burger", price: "460" },
-    { name: "Double Crunch Burger", price: "399" },
-    { name: "Chicken Chapli Burger", price: "360" },
-    { name: "Fillet Crunch Burger", price: "300" },
+    { kind: "simple", name: "Super Zinger Burger",   price: 460 },
+    { kind: "simple", name: "Double Crunch Burger",  price: 399 },
+    { kind: "simple", name: "Chicken Chapli Burger", price: 360 },
+    { kind: "simple", name: "Fillet Crunch Burger",  price: 300 },
   ],
   Sides: [
-    { name: "Loaded Fries", price: "600" },
-    { name: "Foot Long Fries", price: "680" },
-    { name: "Chicken Nuggets (6pcs)", price: "399" },
-    { name: "Plain Fries", price: "250" },
-    { name: "Regular Fries", price: "150" },
+    { kind: "simple", name: "Loaded Fries",          price: 600, desc: "Cheese sauce, grilled chicken, olives, jalapeños, bell peppers" },
+    { kind: "simple", name: "Foot Long Fries",       price: 680 },
+    { kind: "simple", name: "Chicken Nuggets (6pcs)", price: 399 },
+    { kind: "simple", name: "Plain Fries",           price: 250 },
+    { kind: "simple", name: "Regular Fries",         price: 150 },
   ],
   Wings: [
-    { name: "Wings Bucket (10pcs)", price: "680", desc: "Thai Sweet, Peri Peri, or Plain Hot" },
-    { name: "Oven Baked Wings (6pcs)", price: "420" },
-    { name: "Garlic Mayo Wings (6pcs)", price: "420" },
-    { name: "Spicy Mayo Wings (6pcs)", price: "420" },
+    { kind: "simple", name: "Wings Bucket (10pcs)",        price: 680, desc: "Thai Sweet Chillies, Peri Peri Hot, or Plain Hot" },
+    { kind: "simple", name: "Oven Baked Wings (6pcs)",     price: 420 },
+    { kind: "simple", name: "Garlic Mayo Wings (6pcs)",    price: 420 },
+    { kind: "simple", name: "Spicy Mayo Wings (6pcs)",     price: 420 },
   ],
   Drinks: [
-    { name: "Drink 1.5 ltr", price: "220" },
-    { name: "NR 345ml", price: "80" },
-    { name: "Water small", price: "70" },
-    { name: "Extra Dips", price: "70", desc: "Peri Peri, Detroit Special, Malai, Chipotle" },
-  ]
+    { kind: "simple", name: "Drink 1.5 ltr",  price: 220 },
+    { kind: "simple", name: "NR 345ml",        price: 80 },
+    { kind: "simple", name: "Water small",     price: 70 },
+    { kind: "simple", name: "Extra Dips",      price: 70, desc: "Peri Peri / Detroit Special / Malai / Chipotle" },
+  ],
 };
+
+// ── Pizza card — has its own size-toggle state ────────────────────────────────
+
+function PizzaCard({ item, index }: { item: PizzaItem; index: number }) {
+  const { addItem } = useCart();
+  const [size, setSize] = useState<"Medium" | "Large">("Large");
+  const price = size === "Medium" ? item.priceMed : item.priceLg;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.05, duration: 0.25 }}
+      className="bg-gray-50 rounded-2xl p-5 border border-gray-100 hover:border-primary/20 hover:shadow-md transition-all duration-200"
+    >
+      <div className="flex items-start justify-between gap-3 mb-3">
+        <div className="flex-1 min-w-0">
+          <h4 className="font-heading font-bold text-lg text-primary leading-tight">{item.name}</h4>
+          {item.desc && (
+            <p className="text-xs text-muted-foreground mt-1 leading-snug">{item.desc}</p>
+          )}
+        </div>
+      </div>
+
+      {/* Size toggle */}
+      <div className="flex items-center gap-2 mb-3" role="group" aria-label="Select pizza size">
+        {(["Medium", "Large"] as const).map((s) => {
+          const active = size === s;
+          const p = s === "Medium" ? item.priceMed : item.priceLg;
+          return (
+            <button
+              key={s}
+              type="button"
+              onClick={() => setSize(s)}
+              aria-pressed={active}
+              className={`flex-1 py-2 rounded-full text-xs font-bold transition-all duration-150
+                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1
+                ${active
+                  ? "bg-[#0A2612] text-white shadow-sm"
+                  : "bg-white border border-gray-200 text-gray-600 hover:border-gray-400"
+                }`}
+            >
+              {s === "Medium" ? "M" : "L"} · Rs. {p.toLocaleString()}
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="flex items-center justify-between">
+        <span className="font-heading font-black text-xl text-primary">
+          Rs. {price.toLocaleString()}
+        </span>
+        <Button
+          size="sm"
+          className="shrink-0"
+          onClick={() =>
+            addItem({
+              id: `menu-pizza|${item.name}|${size}`,
+              name: `${item.name} Pizza`,
+              variant: size,
+              price,
+            })
+          }
+        >
+          <ShoppingCart size={14} className="mr-1.5" />
+          Add
+        </Button>
+      </div>
+    </motion.div>
+  );
+}
+
+// ── Simple card (burger / side / wing / drink) ────────────────────────────────
+
+function SimpleCard({ item, category, index }: { item: SimpleItem; category: string; index: number }) {
+  const { addItem } = useCart();
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.05, duration: 0.25 }}
+      className="bg-gray-50 rounded-2xl p-5 border border-gray-100 hover:border-primary/20 hover:shadow-md transition-all duration-200 flex items-center justify-between gap-4"
+    >
+      <div className="flex-1 min-w-0">
+        <h4 className="font-heading font-bold text-lg text-primary leading-tight">{item.name}</h4>
+        {item.desc && (
+          <p className="text-xs text-muted-foreground mt-1 leading-snug">{item.desc}</p>
+        )}
+        <p className="font-heading font-black text-xl text-primary mt-2">
+          Rs. {item.price.toLocaleString()}
+        </p>
+      </div>
+      <Button
+        size="sm"
+        className="shrink-0"
+        onClick={() =>
+          addItem({
+            id: `menu-${category}|${item.name}`,
+            name: item.name,
+            variant: "",
+            price: item.price,
+          })
+        }
+      >
+        <ShoppingCart size={14} className="mr-1.5" />
+        Add
+      </Button>
+    </motion.div>
+  );
+}
+
+// ── Section ───────────────────────────────────────────────────────────────────
 
 export function MenuSection() {
   const [activeTab, setActiveTab] = useState("Pizza");
@@ -57,56 +179,91 @@ export function MenuSection() {
   return (
     <section id="menu" className="py-24 bg-white relative">
       <div className="container mx-auto px-4 md:px-6">
+
+        {/* Heading */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-heading font-extrabold text-primary mb-4">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-4xl md:text-5xl font-heading font-extrabold text-primary mb-4"
+          >
             EXPLORE THE <span className="text-secondary">MENU</span>
-          </h2>
+          </motion.h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-8">
             Everything is prepared fresh to order. No compromises.
           </p>
-          
-          <Button onClick={() => setModalOpen(true)} className="gap-2 mb-12" variant="outline" size="lg">
+
+          <Button
+            onClick={() => setModalOpen(true)}
+            className="gap-2 mb-10"
+            variant="outline"
+            size="lg"
+          >
             <ZoomIn size={20} /> View Original Menu Scans
           </Button>
 
-          {/* Categories */}
-          <div className="flex overflow-x-auto pb-4 gap-3 justify-start md:justify-center no-scrollbar">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveTab(cat)}
-                className={`whitespace-nowrap px-6 py-3 rounded-full font-bold transition-all ${
-                  activeTab === cat 
-                    ? "bg-primary text-white shadow-md scale-105" 
-                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
+          {/* Category tabs */}
+          <div
+            className="flex overflow-x-auto pb-2 gap-2 justify-start md:justify-center no-scrollbar"
+            role="tablist"
+            aria-label="Menu categories"
+          >
+            {CATEGORIES.map((cat) => {
+              const active = activeTab === cat;
+              const { icon, label } = CATEGORY_META[cat];
+              return (
+                <button
+                  key={cat}
+                  role="tab"
+                  aria-selected={active}
+                  onClick={() => setActiveTab(cat)}
+                  className={`
+                    relative whitespace-nowrap flex items-center gap-2 px-5 py-3 rounded-full font-bold text-sm
+                    transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary
+                    touch-manipulation select-none
+                    ${active
+                      ? "bg-primary text-white shadow-lg scale-105"
+                      : "bg-gray-100 text-gray-600 hover:bg-gray-200 active:scale-95"
+                    }
+                  `}
+                >
+                  <span aria-hidden="true">{icon}</span>
+                  {label}
+                  {active && (
+                    <motion.span
+                      layoutId="tab-indicator"
+                      className="absolute inset-0 rounded-full bg-primary -z-10"
+                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                    />
+                  )}
+                </button>
+              );
+            })}
           </div>
         </div>
 
-        {/* Menu Items Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 max-w-5xl mx-auto">
-          {menuData[activeTab as keyof typeof menuData].map((item, index) => (
-            <motion.div
-              key={item.name}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05 }}
-              className="flex justify-between items-center p-4 border-b border-gray-100 hover:bg-gray-50 rounded-lg transition-colors"
-            >
-              <div>
-                <h4 className="font-heading font-bold text-lg text-primary">{item.name}</h4>
-                {item.desc && <p className="text-sm text-muted-foreground">{item.desc}</p>}
-              </div>
-              <div className="font-bold text-primary whitespace-nowrap pl-4">
-                Rs. {item.price}
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        {/* Animated items grid — remounts on tab change via key */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.22 }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto"
+            role="tabpanel"
+            aria-label={`${activeTab} menu`}
+          >
+            {menuData[activeTab].map((item, index) =>
+              item.kind === "pizza" ? (
+                <PizzaCard key={item.name} item={item} index={index} />
+              ) : (
+                <SimpleCard key={item.name} item={item} category={activeTab} index={index} />
+              )
+            )}
+          </motion.div>
+        </AnimatePresence>
       </div>
 
       {/* Menu Image Modal */}
@@ -120,10 +277,9 @@ export function MenuSection() {
                 <X size={24} />
               </Dialog.Close>
             </div>
-            
             <div className="overflow-y-auto p-4 flex-1 bg-gray-900">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <img src={menuPizzaImg} alt="Pizza Menu" className="w-full h-auto rounded-lg shadow-lg" />
+                <img src={menuPizzaImg}   alt="Pizza Menu"          className="w-full h-auto rounded-lg shadow-lg" />
                 <img src={menuBurgersImg} alt="Burgers & Sides Menu" className="w-full h-auto rounded-lg shadow-lg" />
               </div>
             </div>
