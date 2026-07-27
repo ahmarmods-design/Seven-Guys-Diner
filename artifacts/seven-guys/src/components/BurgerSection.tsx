@@ -48,12 +48,14 @@ export function BurgerSection() {
                 className="w-full h-full object-cover"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8">
-                <div>
-                  <div className="bg-secondary text-primary font-bold px-3 py-1 rounded-md inline-block mb-2 text-sm">Best Seller</div>
-                  <h3 className="text-3xl font-heading font-bold">Double Crunch Burger</h3>
+              {!selectedBurger && (
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8">
+                  <div>
+                    <div className="bg-secondary text-primary font-bold px-3 py-1 rounded-md inline-block mb-2 text-sm">Best Seller</div>
+                    <h3 className="text-3xl font-heading font-bold">Double Crunch Burger</h3>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </motion.div>
 
@@ -74,14 +76,18 @@ export function BurgerSection() {
                 <div 
                   key={index}
                   onClick={() => setSelectedBurger(burger.name)}
-                  className={`flex items-center justify-between p-5 rounded-xl transition-colors cursor-pointer ${burger.highlight ? 'bg-secondary text-primary' : 'bg-white/10 hover:bg-white/15'}`}
+                  className={`flex items-center justify-between p-5 rounded-xl transition-colors cursor-pointer ${
+                    (selectedBurger ? selectedBurger === burger.name : burger.highlight)
+                      ? 'bg-secondary text-primary'
+                      : 'bg-white/10 hover:bg-white/15'
+                  }`}
                 >
                   <span className="font-heading font-bold text-xl">{burger.name}</span>
                   <div className="flex items-center gap-4">
                     <span className="font-bold text-xl">Rs. {burger.price}</span>
                     <Button
                       size="sm"
-                      variant={burger.highlight ? "default" : "secondary"}
+                      variant={(selectedBurger ? selectedBurger === burger.name : burger.highlight) ? "default" : "secondary"}
                       className="rounded-full px-5"
                       onClick={() =>
                         addItem({
