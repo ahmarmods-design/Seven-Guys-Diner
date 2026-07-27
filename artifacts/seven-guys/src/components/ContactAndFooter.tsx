@@ -84,26 +84,47 @@ export function ContactAndFooter() {
 
         </div>
 
-        <div className="pt-8 border-t border-white/10 text-center text-sm flex flex-col md:flex-row justify-between items-center gap-4">
-          <p>© 2025 Seven Guys Pizza &amp; Burger. All Rights Reserved.</p>
-          <p className="font-heading font-bold text-white/50 tracking-wider">GUJRANWALA, PAKISTAN</p>
-        </div>
+        {/* Bottom bar — 3-column */}
+        <div className="pt-8 border-t border-white/10">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-5 md:gap-4">
 
-        {/* Designer credit */}
-        <div className="mt-6 text-center">
-          <p className="text-[11px] text-white/25 tracking-wide">
-            Designed by{" "}
+            {/* Left — Designer credit */}
             <a
               href="https://wa.me/923372905356?text=Assalam-o-Alaikum%20Ahmar%20Studio!%20I%20visited%20the%20Seven%20Guys%20website%20and%20I'm%20interested%20in%20getting%20a%20professional%20website%20for%20my%20business."
               target="_blank"
               rel="noreferrer"
-              className="inline-block text-white/40 font-semibold cursor-pointer
-                         transition-all duration-300 ease-out
-                         hover:text-secondary hover:tracking-widest"
+              className="group cursor-pointer flex flex-col items-center md:items-start shrink-0"
             >
-              Ahmar Studio
+              <span className="text-[9px] text-white/35 tracking-[0.2em] uppercase font-medium mb-[3px]">
+                Designed by
+              </span>
+              <span
+                className="relative text-[13px] font-bold tracking-wide text-white/60
+                           group-hover:text-secondary
+                           transition-colors duration-300 ease-out
+                           group-hover:[filter:drop-shadow(0_0_10px_hsl(37_90%_55%_/_0.55))]"
+              >
+                Ahmar Studio
+                {/* animated golden underline */}
+                <span
+                  className="absolute left-0 -bottom-[2px] h-[1.5px] w-0 rounded-full bg-secondary
+                             group-hover:w-full transition-all duration-300 ease-out
+                             group-hover:[box-shadow:0_0_6px_hsl(37_90%_55%_/_0.7)]"
+                />
+              </span>
             </a>
-          </p>
+
+            {/* Center — Copyright */}
+            <p className="text-[11px] text-white/40 tracking-wide text-center leading-relaxed order-last md:order-none">
+              © 2025 Seven Guys Pizza &amp; Burger. All Rights Reserved.
+            </p>
+
+            {/* Right — Location */}
+            <p className="font-heading font-bold text-white/40 tracking-[0.2em] text-[11px] shrink-0">
+              GUJRANWALA, PAKISTAN
+            </p>
+
+          </div>
         </div>
       </div>
     </footer>
