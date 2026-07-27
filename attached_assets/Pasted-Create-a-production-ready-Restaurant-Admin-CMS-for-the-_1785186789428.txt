@@ -1,0 +1,306 @@
+Create a production-ready Restaurant Admin CMS for the Seven Guys website.
+
+IMPORTANT:
+Build the complete dashboard structure and all editable sections, but implement features step by step later. Focus on a clean, modular architecture.
+
+==================================================
+ADMIN LOGIN
+==================================================
+
+Hidden route:
+/admin
+
+Login page matching the Seven Guys premium theme.
+
+Password (temporary):
+sevenguys@7890
+
+After login redirect to Dashboard.
+
+==================================================
+SIDEBAR
+==================================================
+
+Dashboard
+
+Menu Manager
+
+Deals & Offers
+
+Categories
+
+Branch Manager
+
+Business Hours
+
+Gallery Manager
+
+Reviews Manager
+
+Orders
+
+Website Settings
+
+SEO Settings
+
+Contact Information
+
+Social Media
+
+Delivery Settings
+
+Homepage Content
+
+Footer Settings
+
+Backup & Restore
+
+Admin Profile
+
+Logout
+
+==================================================
+DASHBOARD
+==================================================
+
+Professional overview cards:
+
+Total Menu Items
+
+Total Categories
+
+Active Deals
+
+Branches
+
+Today's Orders (placeholder)
+
+Website Status
+
+Recent Activity
+
+==================================================
+MENU MANAGER
+==================================================
+
+Prepare full CRUD interface.
+
+Fields:
+
+Product Image
+
+Product Name
+
+Category
+
+Description
+
+Price
+
+Discount Price
+
+Availability
+
+Featured Product
+
+Sort Order
+
+Add
+
+Edit
+
+Delete
+
+==================================================
+DEALS
+==================================================
+
+Create
+
+Edit
+
+Delete
+
+Enable / Disable
+
+Start Date
+
+End Date
+
+Deal Image
+
+==================================================
+BRANCH MANAGER
+==================================================
+
+Branch Name
+
+Address
+
+Phone
+
+WhatsApp
+
+Google Maps
+
+Branch Images
+
+Delivery Availability
+
+==================================================
+BUSINESS HOURS
+==================================================
+
+Opening Time
+
+Closing Time
+
+Holiday Status
+
+Temporary Closed
+
+==================================================
+GALLERY
+==================================================
+
+Upload Images
+
+Replace Images
+
+Delete Images
+
+==================================================
+REVIEWS
+==================================================
+
+Add
+
+Edit
+
+Delete
+
+Hide / Show
+
+==================================================
+ORDERS
+==================================================
+
+Prepare the Orders page structure.
+
+Future WhatsApp orders will appear here.
+
+==================================================
+CONTACT INFORMATION
+==================================================
+
+Phone
+
+WhatsApp
+
+Email
+
+Address
+
+==================================================
+SOCIAL MEDIA
+==================================================
+
+Facebook
+
+Instagram
+
+TikTok
+
+Google Maps
+
+==================================================
+SEO
+==================================================
+
+Website Title
+
+Meta Description
+
+Keywords
+
+Open Graph Image
+
+==================================================
+HOMEPAGE CONTENT
+==================================================
+
+Hero Title
+
+Hero Subtitle
+
+Hero Buttons
+
+Banner Images
+
+==================================================
+FOOTER
+==================================================
+
+Footer Text
+
+Copyright
+
+Designer Credit
+
+==================================================
+LIVE UPDATE REQUIREMENTS
+==================================================
+
+Design the system so that every future change updates the live website automatically.
+
+After clicking Save:
+
+Show:
+
+Saving...
+
+Then:
+
+Changes Saved Successfully.
+
+The architecture must support automatic synchronization with the live website.
+
+No manual refresh.
+
+No redeploy.
+
+==================================================
+DESIGN
+==================================================
+
+Premium luxury UI.
+
+Dark Green
+
+White
+
+Golden accents
+
+Glass cards
+
+Rounded corners
+
+Professional spacing
+
+Responsive
+
+Desktop
+
+Tablet
+
+Mobile
+
+==================================================
+IMPORTANT
+==================================================
+
+Do NOT build all backend logic now.
+
+Create a scalable architecture and modular components so every section can be connected to a database later without redesigning the dashboard.
+
+Keep the code clean and production-ready.

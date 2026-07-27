@@ -10,13 +10,17 @@ export interface CMSDeal {
   enabled: boolean;
   color: string;
   textColor: string;
+  startDate?: string;
+  endDate?: string;
+  imageUrl?: string;
 }
 
 export interface CMSPizzaItem {
   id: string; kind: "pizza";
   name: string; desc?: string;
   priceMed: number; priceLg: number;
-  available: boolean; featured: boolean; imageUrl?: string;
+  available: boolean; featured: boolean;
+  imageUrl?: string; sortOrder?: number;
 }
 export interface CMSSimpleItem {
   id: string; kind: "simple";
@@ -24,6 +28,7 @@ export interface CMSSimpleItem {
   price: number; discountPrice?: number;
   emoji?: string; imageUrl?: string;
   available: boolean; featured: boolean;
+  sortOrder?: number;
 }
 export type CMSMenuItem = CMSPizzaItem | CMSSimpleItem;
 export type CMSMenuData = Record<string, CMSMenuItem[]>;
@@ -47,16 +52,38 @@ export interface CMSReview {
   time: string; rating: number; visible: boolean;
 }
 
-export interface CMSHomepage { heroTagline: string; heroDescription: string; }
+export interface CMSHomepage {
+  heroTagline: string;
+  heroDescription: string;
+  heroTitle?: string;
+  heroSubtitle?: string;
+  heroCtaPrimary?: string;
+  heroCtaSecondary?: string;
+  bannerImages?: string[];
+}
 
 export interface CMSWebsiteSettings {
   phone: string; whatsapp: string; email: string; address: string;
   footerText: string; copyright: string; designerCredit: string;
   facebook: string; instagram: string; tiktok: string; googleMaps: string;
   seoTitle: string; seoDescription: string; seoKeywords: string;
+  ogImage?: string;
 }
 
-// ── Defaults (match current hardcoded site values) ───────────────────────────
+export interface CMSDeliveryArea {
+  id: string; name: string; charge: number; available: boolean;
+}
+export interface CMSDeliverySettings {
+  available: boolean;
+  minimumOrder: number;
+  deliveryCharge: number;
+  freeDeliveryAbove: number;
+  estimatedTime: string;
+  areas: CMSDeliveryArea[];
+  note: string;
+}
+
+// ── Defaults ─────────────────────────────────────────────────────────────────
 
 export const DEFAULT_DEALS: CMSDeal[] = [
   { id:"d1", name:"Single Guy",      items:["1 Fillet Crunch Burger","1 Drink","Regular Fries"],           price:470,  enabled:true, color:"bg-primary",   textColor:"text-white"    },
@@ -69,37 +96,37 @@ export const DEFAULT_CATEGORIES: string[] = ["Pizza","Burgers","Sides","Wings","
 
 export const DEFAULT_MENU: CMSMenuData = {
   Pizza: [
-    { id:"p1", kind:"pizza", name:"Double Beast",   priceMed:650, priceLg:1399, desc:"Chicken Tikka, Kabab, Fajita, Olives, Capsicum & Extra Cheese",              available:true, featured:true  },
-    { id:"p2", kind:"pizza", name:"Detroit Fajita", priceMed:650, priceLg:1399, desc:"Chicken Fajita, Onions, Capsicums, Green Jalapeño Sauce",                    available:true, featured:false },
-    { id:"p3", kind:"pizza", name:"Malai Boti",     priceMed:650, priceLg:1399, desc:"BBQ Malai Boti Chicken, Creamy Sauce, Onion, Black Olive",                   available:true, featured:false },
-    { id:"p4", kind:"pizza", name:"Tandoori BBQ",   priceMed:650, priceLg:1399, desc:"Kebab Bites, Chicken Tikka, Olives, Capsicum, Extra Cheese",                 available:true, featured:false },
-    { id:"p5", kind:"pizza", name:"Hot Peri Peri",  priceMed:650, priceLg:1399, desc:"Hot Peri Peri Sauce, Spicy Peri Peri Chicken, Red Jalapeño",                 available:true, featured:false },
-    { id:"p6", kind:"pizza", name:"Detroit Tikka",  priceMed:650, priceLg:1399, desc:"Chicken Tikka, Onion, Tomatoes, Olives, Detroit Sauce",                      available:true, featured:false },
+    { id:"p1", kind:"pizza", name:"Double Beast",   priceMed:650, priceLg:1399, desc:"Chicken Tikka, Kabab, Fajita, Olives, Capsicum & Extra Cheese",              available:true, featured:true,  sortOrder:1 },
+    { id:"p2", kind:"pizza", name:"Detroit Fajita", priceMed:650, priceLg:1399, desc:"Chicken Fajita, Onions, Capsicums, Green Jalapeño Sauce",                    available:true, featured:false, sortOrder:2 },
+    { id:"p3", kind:"pizza", name:"Malai Boti",     priceMed:650, priceLg:1399, desc:"BBQ Malai Boti Chicken, Creamy Sauce, Onion, Black Olive",                   available:true, featured:false, sortOrder:3 },
+    { id:"p4", kind:"pizza", name:"Tandoori BBQ",   priceMed:650, priceLg:1399, desc:"Kebab Bites, Chicken Tikka, Olives, Capsicum, Extra Cheese",                 available:true, featured:false, sortOrder:4 },
+    { id:"p5", kind:"pizza", name:"Hot Peri Peri",  priceMed:650, priceLg:1399, desc:"Hot Peri Peri Sauce, Spicy Peri Peri Chicken, Red Jalapeño",                 available:true, featured:false, sortOrder:5 },
+    { id:"p6", kind:"pizza", name:"Detroit Tikka",  priceMed:650, priceLg:1399, desc:"Chicken Tikka, Onion, Tomatoes, Olives, Detroit Sauce",                      available:true, featured:false, sortOrder:6 },
   ],
   Burgers: [
-    { id:"b1", kind:"simple", name:"Super Zinger Burger",   price:460, available:true, featured:false },
-    { id:"b2", kind:"simple", name:"Double Crunch Burger",  price:399, available:true, featured:true  },
-    { id:"b3", kind:"simple", name:"Chicken Chapli Burger", price:360, available:true, featured:false },
-    { id:"b4", kind:"simple", name:"Fillet Crunch Burger",  price:300, available:true, featured:false },
+    { id:"b1", kind:"simple", name:"Super Zinger Burger",   price:460, available:true, featured:false, sortOrder:1 },
+    { id:"b2", kind:"simple", name:"Double Crunch Burger",  price:399, available:true, featured:true,  sortOrder:2 },
+    { id:"b3", kind:"simple", name:"Chicken Chapli Burger", price:360, available:true, featured:false, sortOrder:3 },
+    { id:"b4", kind:"simple", name:"Fillet Crunch Burger",  price:300, available:true, featured:false, sortOrder:4 },
   ],
   Sides: [
-    { id:"s1", kind:"simple", name:"Loaded Fries",            price:600, desc:"Cheese sauce, grilled chicken, olives, jalapeños, bell peppers", available:true, featured:true  },
-    { id:"s2", kind:"simple", name:"Foot Long Fries",         price:680, available:true, featured:false },
-    { id:"s3", kind:"simple", name:"Chicken Nuggets (6 pcs)", price:399, emoji:"🍗", desc:"6 crispy golden chicken nuggets with signature dips.", available:true, featured:false },
-    { id:"s4", kind:"simple", name:"Plain Fries",             price:250, available:true, featured:false },
-    { id:"s5", kind:"simple", name:"Regular Fries",           price:150, available:true, featured:false },
+    { id:"s1", kind:"simple", name:"Loaded Fries",            price:600, desc:"Cheese sauce, grilled chicken, olives, jalapeños, bell peppers", available:true, featured:true,  sortOrder:1 },
+    { id:"s2", kind:"simple", name:"Foot Long Fries",         price:680, available:true, featured:false, sortOrder:2 },
+    { id:"s3", kind:"simple", name:"Chicken Nuggets (6 pcs)", price:399, emoji:"🍗", desc:"6 crispy golden chicken nuggets with signature dips.", available:true, featured:false, sortOrder:3 },
+    { id:"s4", kind:"simple", name:"Plain Fries",             price:250, available:true, featured:false, sortOrder:4 },
+    { id:"s5", kind:"simple", name:"Regular Fries",           price:150, available:true, featured:false, sortOrder:5 },
   ],
   Wings: [
-    { id:"w1", kind:"simple", name:"Wings Bucket (10pcs)",     price:680, desc:"Thai Sweet Chillies, Peri Peri Hot, or Plain Hot", available:true, featured:true  },
-    { id:"w2", kind:"simple", name:"Oven Baked Wings (6pcs)",  price:420, available:true, featured:false },
-    { id:"w3", kind:"simple", name:"Garlic Mayo Wings (6pcs)", price:420, available:true, featured:false },
-    { id:"w4", kind:"simple", name:"Spicy Mayo Wings (6pcs)",  price:420, available:true, featured:false },
+    { id:"w1", kind:"simple", name:"Wings Bucket (10pcs)",     price:680, desc:"Thai Sweet Chillies, Peri Peri Hot, or Plain Hot", available:true, featured:true,  sortOrder:1 },
+    { id:"w2", kind:"simple", name:"Oven Baked Wings (6pcs)",  price:420, available:true, featured:false, sortOrder:2 },
+    { id:"w3", kind:"simple", name:"Garlic Mayo Wings (6pcs)", price:420, available:true, featured:false, sortOrder:3 },
+    { id:"w4", kind:"simple", name:"Spicy Mayo Wings (6pcs)",  price:420, available:true, featured:false, sortOrder:4 },
   ],
   Drinks: [
-    { id:"dr1", kind:"simple", name:"Drink 1.5 ltr",  price:220, available:true, featured:false },
-    { id:"dr2", kind:"simple", name:"NR 345ml",        price:80,  available:true, featured:false },
-    { id:"dr3", kind:"simple", name:"Water small",     price:70,  available:true, featured:false },
-    { id:"dr4", kind:"simple", name:"Extra Dips",      price:70,  desc:"Peri Peri / Detroit Special / Malai / Chipotle", available:true, featured:false },
+    { id:"dr1", kind:"simple", name:"Drink 1.5 ltr",  price:220, available:true, featured:false, sortOrder:1 },
+    { id:"dr2", kind:"simple", name:"NR 345ml",        price:80,  available:true, featured:false, sortOrder:2 },
+    { id:"dr3", kind:"simple", name:"Water small",     price:70,  available:true, featured:false, sortOrder:3 },
+    { id:"dr4", kind:"simple", name:"Extra Dips",      price:70,  desc:"Peri Peri / Detroit Special / Malai / Chipotle", available:true, featured:false, sortOrder:4 },
   ],
 };
 
@@ -124,8 +151,13 @@ export const DEFAULT_REVIEWS: CMSReview[] = [
 ];
 
 export const DEFAULT_HOMEPAGE: CMSHomepage = {
-  heroTagline:    "Gujranwala's Finest",
-  heroDescription:"Detroit-style square pizza with crispy caramelized edges. Gourmet burgers stacked high. Open until 2 AM, three locations across Gujranwala.",
+  heroTagline:      "Gujranwala's Finest",
+  heroDescription:  "Detroit-style square pizza with crispy caramelized edges. Gourmet burgers stacked high. Open until 2 AM, three locations across Gujranwala.",
+  heroTitle:        "Gujranwala's Home of Detroit Pizza",
+  heroSubtitle:     "Bold flavors. Premium craft. Melted cheese.",
+  heroCtaPrimary:   "Order Now",
+  heroCtaSecondary: "Explore Menu",
+  bannerImages:     [],
 };
 
 export const DEFAULT_WEBSITE: CMSWebsiteSettings = {
@@ -140,41 +172,57 @@ export const DEFAULT_WEBSITE: CMSWebsiteSettings = {
   seoTitle:"Seven Guys Pizza & Burger | Detroit Pizza & Gourmet Burgers in Gujranwala",
   seoDescription:"Order Detroit-style square pizza and gourmet burgers in Gujranwala. 3 branches — Jugna Bazar, Civil Lines, Kings Mall. Delivery available 2PM–2AM. Call 0319-4800036.",
   seoKeywords:"Detroit pizza Gujranwala, pizza burger Gujranwala, Seven Guys, best pizza Pakistan",
+  ogImage:"",
+};
+
+export const DEFAULT_DELIVERY: CMSDeliverySettings = {
+  available:true, minimumOrder:400, deliveryCharge:100, freeDeliveryAbove:800,
+  estimatedTime:"30–45 minutes",
+  areas:[
+    { id:"da1", name:"Gujranwala City",      charge:0,   available:true },
+    { id:"da2", name:"Satellite Town",        charge:50,  available:true },
+    { id:"da3", name:"Cantt Area",            charge:50,  available:true },
+    { id:"da4", name:"Peoples Colony",        charge:50,  available:true },
+    { id:"da5", name:"Model Town",            charge:80,  available:true },
+  ],
+  note:"Free delivery on orders above Rs. 800",
 };
 
 // ── Context ──────────────────────────────────────────────────────────────────
 
 interface CMSContextType {
-  deals:     CMSDeal[];
-  menu:      CMSMenuData;
+  deals:      CMSDeal[];
+  menu:       CMSMenuData;
   categories: string[];
-  branches:  CMSBranch[];
-  hours:     CMSBusinessHours;
-  gallery:   CMSGalleryItem[];
-  reviews:   CMSReview[];
-  homepage:  CMSHomepage;
-  website:   CMSWebsiteSettings;
-  ready:     boolean;
+  branches:   CMSBranch[];
+  hours:      CMSBusinessHours;
+  gallery:    CMSGalleryItem[];
+  reviews:    CMSReview[];
+  homepage:   CMSHomepage;
+  website:    CMSWebsiteSettings;
+  delivery:   CMSDeliverySettings;
+  ready:      boolean;
 }
 
 const CMSContext = createContext<CMSContextType>({
   deals: DEFAULT_DEALS, menu: DEFAULT_MENU, categories: DEFAULT_CATEGORIES,
   branches: DEFAULT_BRANCHES, hours: DEFAULT_HOURS, gallery: [],
   reviews: DEFAULT_REVIEWS, homepage: DEFAULT_HOMEPAGE, website: DEFAULT_WEBSITE,
-  ready: false,
+  delivery: DEFAULT_DELIVERY, ready: false,
 });
 
 export function CMSProvider({ children }: { children: React.ReactNode }) {
-  const [deals,      setDeals]     = useState<CMSDeal[]>(DEFAULT_DEALS);
-  const [menu,       setMenu]      = useState<CMSMenuData>(DEFAULT_MENU);
-  const [categories, setCategories]= useState<string[]>(DEFAULT_CATEGORIES);
-  const [branches,   setBranches]  = useState<CMSBranch[]>(DEFAULT_BRANCHES);
-  const [hours,      setHours]     = useState<CMSBusinessHours>(DEFAULT_HOURS);
-  const [gallery,    setGallery]   = useState<CMSGalleryItem[]>([]);
-  const [reviews,    setReviews]   = useState<CMSReview[]>(DEFAULT_REVIEWS);
-  const [homepage,   setHomepage]  = useState<CMSHomepage>(DEFAULT_HOMEPAGE);
-  const [website,    setWebsite]   = useState<CMSWebsiteSettings>(DEFAULT_WEBSITE);
-  const [ready,      setReady]     = useState(false);
+  const [deals,      setDeals]      = useState<CMSDeal[]>(DEFAULT_DEALS);
+  const [menu,       setMenu]       = useState<CMSMenuData>(DEFAULT_MENU);
+  const [categories, setCategories] = useState<string[]>(DEFAULT_CATEGORIES);
+  const [branches,   setBranches]   = useState<CMSBranch[]>(DEFAULT_BRANCHES);
+  const [hours,      setHours]      = useState<CMSBusinessHours>(DEFAULT_HOURS);
+  const [gallery,    setGallery]    = useState<CMSGalleryItem[]>([]);
+  const [reviews,    setReviews]    = useState<CMSReview[]>(DEFAULT_REVIEWS);
+  const [homepage,   setHomepage]   = useState<CMSHomepage>(DEFAULT_HOMEPAGE);
+  const [website,    setWebsite]    = useState<CMSWebsiteSettings>(DEFAULT_WEBSITE);
+  const [delivery,   setDelivery]   = useState<CMSDeliverySettings>(DEFAULT_DELIVERY);
+  const [ready,      setReady]      = useState(false);
 
   useEffect(() => {
     const fetchAll = async () => {
@@ -192,6 +240,7 @@ export function CMSProvider({ children }: { children: React.ReactNode }) {
         if (d.reviews)        setReviews(d.reviews as CMSReview[]);
         if (d.homepage)       setHomepage(d.homepage as CMSHomepage);
         if (d.website)        setWebsite(d.website as CMSWebsiteSettings);
+        if (d.delivery)       setDelivery(d.delivery as CMSDeliverySettings);
         setReady(true);
       } catch { setReady(true); }
     };
@@ -201,7 +250,7 @@ export function CMSProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <CMSContext.Provider value={{ deals, menu, categories, branches, hours, gallery, reviews, homepage, website, ready }}>
+    <CMSContext.Provider value={{ deals, menu, categories, branches, hours, gallery, reviews, homepage, website, delivery, ready }}>
       {children}
     </CMSContext.Provider>
   );
