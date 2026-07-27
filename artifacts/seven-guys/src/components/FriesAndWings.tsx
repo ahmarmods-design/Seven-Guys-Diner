@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import loadedFriesImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.24_PM_1784372710689.webp";
+import footLongFriesImg from "@assets/foot_long_fries_1785179282835.webp";
+import plainFriesImg from "@assets/plain_fries_1785179299440.webp";
 import wingsImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.23_PM_(1)_1784372623994.webp";
 import nuggetsImg from "@assets/chicken_nuggets_1785176425168.webp";
 import { useCart } from "@/context/CartContext";
@@ -36,6 +38,12 @@ export function FriesAndWings() {
 
   // Fries option — default to Loaded Fries (Rs. 600)
   const [friesOption, setFriesOption] = useState<FriesOption>(FRIES_OPTIONS[0]);
+
+  // Derive the correct fries image from the selected option
+  const friesImg =
+    friesOption.label === "Foot Long Fries" ? footLongFriesImg :
+    friesOption.label === "Plain Fries" || friesOption.label === "Regular Fries" ? plainFriesImg :
+    loadedFriesImg;
 
   // Wings size selection — default to Bucket (10pcs)
   const [wingsSize, setWingsSize] = useState<WingsSize>(WINGS_SIZES[1]);
@@ -132,8 +140,8 @@ export function FriesAndWings() {
           >
             <div className="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl">
               <img
-                src={loadedFriesImg}
-                alt="Loaded Cheese Fries"
+                src={friesImg}
+                alt={friesOption.label}
                 className="w-full h-full object-cover"
                 loading="lazy"
               />
