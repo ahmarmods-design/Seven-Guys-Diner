@@ -1,4 +1,5 @@
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, useState, useCallback } from "react";
+import { LoadingScreen } from "@/components/LoadingScreen";
 
 // ── Critical path — loaded eagerly (needed on first paint) ─────────────────
 import { Navbar }             from "@/components/Navbar";
@@ -43,7 +44,16 @@ function Head() {
 }
 
 export default function App() {
+  // Show intro only on a fresh page load (not on SPA navigation).
+  // In-memory flag resets on every reload/refresh; persists across hash/history navigation.
+  const [splashDone, setSplashDone] = useState(false);
+  const handleSplashComplete = useCallback(() => setSplashDone(true), []);
+
   return (
+    <>
+      {/* Intro plays over the top; main app renders beneath it for preloading */}
+      {!splashDone && <LoadingScreen onComplete={handleSplashComplete} />}
+
     <CMSProvider>
     <CartProvider>
     <BranchProvider>
@@ -97,5 +107,6 @@ export default function App() {
     </BranchProvider>
     </CartProvider>
     </CMSProvider>
+    </>
   );
 }
