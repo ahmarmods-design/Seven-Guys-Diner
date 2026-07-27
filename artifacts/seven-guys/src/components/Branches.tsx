@@ -1,44 +1,29 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { MapPin, Phone, Clock, Navigation } from "lucide-react";
+import { useCMS } from "@/context/CMSContext";
 
-import branch1Img from "@assets/WhatsApp_Image_2026-07-20_at_6.32.38_PM_1784550819503.webp"; // Jugna Bazar branch exterior
-import branch2Img from "@assets/WhatsApp_Image_2026-07-20_at_5.57.16_PM_1784550853058.webp";   // Civil Lines branch exterior
-import branch3Img from "@assets/WhatsApp_Image_2026-07-20_at_6.02.44_PM_1784550921230.webp";   // Kings Mall branch exterior
+// Static fallback images keyed by branch id (shown when no CMS imageUrl set)
+import branch1Img from "@assets/WhatsApp_Image_2026-07-20_at_6.32.38_PM_1784550819503.webp";
+import branch2Img from "@assets/WhatsApp_Image_2026-07-20_at_5.57.16_PM_1784550853058.webp";
+import branch3Img from "@assets/WhatsApp_Image_2026-07-20_at_6.02.44_PM_1784550921230.webp";
 
-const branches = [
-  {
-    name: "Jugna Bazar Branch",
-    address: "Jugna Bazar, Sialkot Road, Gujranwala",
-    mapCode: "56R6+C9",
-    mapLink: "https://plus.codes/56R6+C9",
-    image: branch1Img,
-  },
-  {
-    name: "Civil Lines Branch",
-    address: "Mumtaz Market, Civil Lines, Gujranwala",
-    mapCode: "55JM+6H",
-    mapLink: "https://plus.codes/55JM+6H",
-    image: branch2Img,
-  },
-  {
-    name: "Kings Mall Branch",
-    address: "Kings Mall, Judicial Housing Colony, Gujranwala",
-    mapCode: "453Q+2R",
-    mapLink: "https://plus.codes/453Q+2R",
-    image: branch3Img,
-  }
-];
+const FALLBACK_IMAGES: Record<string, string> = {
+  br1: branch1Img, br2: branch2Img, br3: branch3Img,
+};
 
 export function Branches() {
+  const { branches, hours } = useCMS();
+
+  const hoursDisplay = `${hours.openTime} – ${hours.closeTime}`;
+  const isClosed     = hours.holidayClosed || hours.temporaryClosed;
+
   return (
     <section id="branches" className="py-24 bg-gray-50">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center mb-16">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
             className="text-4xl md:text-5xl font-heading font-extrabold text-primary mb-4"
           >
             FIND <span className="text-secondary">US</span>
@@ -46,81 +31,65 @@ export function Branches() {
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Three premium locations across Gujranwala. Always serving fresh. Always open late.
           </p>
+          {isClosed && hours.note && (
+            <div className="mt-4 inline-block bg-red-50 border border-red-200 text-red-700 text-sm font-semibold px-5 py-2.5 rounded-full">
+              ⚠️ {hours.note}
+            </div>
+          )}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {branches.map((branch, index) => (
-            /*
-             * FIX: Framer Motion applies CSS `transform` to the animated element.
-             * Browsers (notably Safari and some Blink versions) do not correctly
-             * honour `overflow: hidden` on an element that also has a CSS transform,
-             * which can cause child images to paint outside the card boundary and
-             * visually overlap between cards.
-             *
-             * Solution: separate the animation wrapper (motion.div — carries
-             * transform/opacity, no overflow) from the card shell (inner div —
-             * carries overflow-hidden and rounded corners, no transform).
-             * Because opacity:0 on the parent makes the entire subtree invisible,
-             * the "cards fade up from below" animation is preserved exactly.
-             */
-            <motion.div
-              key={branch.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              // ↑ animation only — intentionally no overflow-hidden here
-            >
-              {/* Card shell: overflow-hidden lives here, no CSS transform */}
-              <div className="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 group flex flex-col h-full">
-
-                {/* Image container: isolated overflow clip so hover-scale never escapes */}
-                <div className="h-48 relative overflow-hidden shrink-0">
-                  <img
-                    src={branch.image}
-                    alt={branch.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <div className="absolute top-4 left-4 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md flex items-center gap-1">
-                    <span className="w-2 h-2 rounded-full bg-white animate-pulse"></span> Open Now
+          {branches.map((branch, index) => {
+            const imgSrc = branch.imageUrl || FALLBACK_IMAGES[branch.id] || branch1Img;
+            return (
+              <motion.div
+                key={branch.id}
+                initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }} transition={{ delay: index * 0.1 }}
+              >
+                <div className="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 group flex flex-col h-full">
+                  <div className="h-48 relative overflow-hidden shrink-0">
+                    <img
+                      src={imgSrc} alt={branch.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy" decoding="async"
+                    />
+                    <div className={`absolute top-4 left-4 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md flex items-center gap-1 ${isClosed ? "bg-red-500" : "bg-green-500"}`}>
+                      <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+                      {isClosed ? "Closed" : "Open Now"}
+                    </div>
+                  </div>
+                  <div className="p-6 flex-1 flex flex-col">
+                    <h3 className="text-2xl font-heading font-bold text-primary mb-3">{branch.name}</h3>
+                    <div className="space-y-3 mb-8 flex-1">
+                      <div className="flex items-start gap-3 text-muted-foreground">
+                        <MapPin className="text-secondary shrink-0 mt-1" size={18} />
+                        <span className="text-sm leading-relaxed">{branch.address}</span>
+                      </div>
+                      <div className="flex items-center gap-3 text-muted-foreground">
+                        <Clock className="text-secondary shrink-0" size={18} />
+                        <span className="text-sm">{hoursDisplay}</span>
+                      </div>
+                      <div className="flex items-center gap-3 text-muted-foreground">
+                        <Phone className="text-secondary shrink-0" size={18} />
+                        <span className="text-sm font-medium text-primary">{branch.phone}</span>
+                      </div>
+                    </div>
+                    <div className="flex gap-3 mt-auto">
+                      <Button variant="outline" className="flex-1" asChild>
+                        <a href={branch.mapLink} target="_blank" rel="noreferrer">
+                          <Navigation size={16} className="mr-2" /> Maps
+                        </a>
+                      </Button>
+                      <Button className="flex-1" asChild>
+                        <a href={`tel:${branch.phone.replace(/[^0-9]/g, "")}`}>Call</a>
+                      </Button>
+                    </div>
                   </div>
                 </div>
-
-                <div className="p-6 flex-1 flex flex-col">
-                  <h3 className="text-2xl font-heading font-bold text-primary mb-3">{branch.name}</h3>
-
-                  <div className="space-y-3 mb-8 flex-1">
-                    <div className="flex items-start gap-3 text-muted-foreground">
-                      <MapPin className="text-secondary shrink-0 mt-1" size={18} />
-                      <span className="text-sm leading-relaxed">{branch.address}</span>
-                    </div>
-                    <div className="flex items-center gap-3 text-muted-foreground">
-                      <Clock className="text-secondary shrink-0" size={18} />
-                      <span className="text-sm">2:00 PM – 2:00 AM</span>
-                    </div>
-                    <div className="flex items-center gap-3 text-muted-foreground">
-                      <Phone className="text-secondary shrink-0" size={18} />
-                      <span className="text-sm font-medium text-primary">0319-4800036</span>
-                    </div>
-                  </div>
-
-                  <div className="flex gap-3 mt-auto">
-                    <Button variant="outline" className="flex-1" asChild>
-                      <a href={branch.mapLink} target="_blank" rel="noreferrer">
-                        <Navigation size={16} className="mr-2" /> Maps
-                      </a>
-                    </Button>
-                    <Button className="flex-1" asChild>
-                      <a href="tel:03194800036">Call</a>
-                    </Button>
-                  </div>
-                </div>
-
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

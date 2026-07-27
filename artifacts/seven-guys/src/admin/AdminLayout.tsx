@@ -1,29 +1,46 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { AdminSidebar } from "./AdminSidebar";
-import { DashboardHome } from "./pages/DashboardHome";
+import { DashboardHome }    from "./pages/DashboardHome";
+import { MenuManager }      from "./pages/MenuManager";
+import { DealsManager }     from "./pages/DealsManager";
+import { CategoryManager }  from "./pages/CategoryManager";
+import { BranchSettings }   from "./pages/BranchSettings";
+import { BusinessHours }    from "./pages/BusinessHours";
+import { GalleryManager }   from "./pages/GalleryManager";
+import { ReviewsManager }   from "./pages/ReviewsManager";
+import { HomepageContent }  from "./pages/HomepageContent";
+import { WebsiteSettings }  from "./pages/WebsiteSettings";
 
-// Registry: as pages are built, add them here
-type PageKey = "dashboard";
+type PageKey =
+  | "dashboard" | "menu" | "categories" | "deals"
+  | "branches"  | "hours" | "gallery" | "reviews"
+  | "homepage"  | "settings";
 
 const PAGE_REGISTRY: Record<PageKey, React.ComponentType> = {
-  dashboard: DashboardHome,
+  dashboard:  DashboardHome,
+  menu:       MenuManager,
+  categories: CategoryManager,
+  deals:      DealsManager,
+  branches:   BranchSettings,
+  hours:      BusinessHours,
+  gallery:    GalleryManager,
+  reviews:    ReviewsManager,
+  homepage:   HomepageContent,
+  settings:   WebsiteSettings,
 };
 
 export function AdminLayout() {
   const [activeKey, setActiveKey] = useState<string>("dashboard");
-
-  const PageComponent =
-    PAGE_REGISTRY[activeKey as PageKey] ?? DashboardHome;
+  const PageComponent = PAGE_REGISTRY[activeKey as PageKey] ?? DashboardHome;
 
   return (
     <div className="min-h-screen bg-gray-50 flex">
       <AdminSidebar activeKey={activeKey} onNavigate={setActiveKey} />
 
-      {/* Main content */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Top bar */}
-        <header className="bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between sticky top-0 z-30 lg:top-0 mt-[52px] lg:mt-0">
+        <header className="bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between sticky top-0 z-30 mt-[52px] lg:mt-0">
           <div className="hidden lg:block">
             <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">
               Seven Guys · Admin
@@ -45,8 +62,8 @@ export function AdminLayout() {
           key={activeKey}
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.25, ease: "easeOut" }}
-          className="flex-1 p-6 md:p-8 max-w-7xl w-full mx-auto"
+          transition={{ duration: 0.22, ease: [0, 0, 0.2, 1] as const }}
+          className="flex-1 p-5 md:p-8 max-w-7xl w-full mx-auto"
         >
           <PageComponent />
         </motion.main>

@@ -7,8 +7,9 @@ import * as Dialog from "@radix-ui/react-dialog";
 import menuPizzaImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.25_PM_(1)_1784372614314.webp";
 import menuBurgersImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.26_PM_1784372608349.webp";
 import { useCart } from "@/context/CartContext";
+import { useCMS, type CMSPizzaItem, type CMSSimpleItem } from "@/context/CMSContext";
 
-// ── Data ──────────────────────────────────────────────────────────────────────
+// ── Category meta (icons/labels stay static — just labels, not prices) ───────
 
 const CATEGORY_META: Record<string, { icon: string; label: string }> = {
   Pizza:   { icon: "🍕", label: "Pizza" },
@@ -18,53 +19,9 @@ const CATEGORY_META: Record<string, { icon: string; label: string }> = {
   Drinks:  { icon: "🥤", label: "Drinks" },
 };
 
-const CATEGORIES = Object.keys(CATEGORY_META);
-
-type PizzaItem  = { kind: "pizza";   name: string; desc?: string; priceMed: number; priceLg: number };
-/**
- * SimpleItem — used for Burgers, Sides, Wings, Drinks.
- * `image`  — imported asset URL for a product photo (shows as a thumbnail).
- * `emoji`  — single emoji used as a visual placeholder when no photo is available.
- * Only one of the two is needed; `image` takes priority if both are set.
- */
-type SimpleItem = { kind: "simple";  name: string; desc?: string; price: number; image?: string; emoji?: string };
-type MenuItem   = PizzaItem | SimpleItem;
-
-const menuData: Record<string, MenuItem[]> = {
-  Pizza: [
-    { kind: "pizza", name: "Double Beast",   priceMed: 650, priceLg: 1399, desc: "Chicken Tikka, Kabab, Fajita, Olives, Capsicum & Extra Cheese" },
-    { kind: "pizza", name: "Detroit Fajita", priceMed: 650, priceLg: 1399, desc: "Chicken Fajita, Onions, Capsicums, Green Jalapeño Sauce" },
-    { kind: "pizza", name: "Malai Boti",     priceMed: 650, priceLg: 1399, desc: "BBQ Malai Boti Chicken, Creamy Sauce, Onion, Black Olive" },
-    { kind: "pizza", name: "Tandoori BBQ",   priceMed: 650, priceLg: 1399, desc: "Kebab Bites, Chicken Tikka, Olives, Capsicum, Extra Cheese" },
-    { kind: "pizza", name: "Hot Peri Peri",  priceMed: 650, priceLg: 1399, desc: "Hot Peri Peri Sauce, Spicy Peri Peri Chicken, Red Jalapeño" },
-    { kind: "pizza", name: "Detroit Tikka",  priceMed: 650, priceLg: 1399, desc: "Chicken Tikka, Onion, Tomatoes, Olives, Detroit Sauce" },
-  ],
-  Burgers: [
-    { kind: "simple", name: "Super Zinger Burger",   price: 460 },
-    { kind: "simple", name: "Double Crunch Burger",  price: 399 },
-    { kind: "simple", name: "Chicken Chapli Burger", price: 360 },
-    { kind: "simple", name: "Fillet Crunch Burger",  price: 300 },
-  ],
-  Sides: [
-    { kind: "simple", name: "Loaded Fries",          price: 600, desc: "Cheese sauce, grilled chicken, olives, jalapeños, bell peppers" },
-    { kind: "simple", name: "Foot Long Fries",       price: 680 },
-    { kind: "simple", name: "Chicken Nuggets (6 pcs)", price: 399, emoji: "🍗", desc: "6 crispy golden chicken nuggets, perfectly seasoned and served hot with signature dips." },
-    { kind: "simple", name: "Plain Fries",           price: 250 },
-    { kind: "simple", name: "Regular Fries",         price: 150 },
-  ],
-  Wings: [
-    { kind: "simple", name: "Wings Bucket (10pcs)",        price: 680, desc: "Thai Sweet Chillies, Peri Peri Hot, or Plain Hot" },
-    { kind: "simple", name: "Oven Baked Wings (6pcs)",     price: 420 },
-    { kind: "simple", name: "Garlic Mayo Wings (6pcs)",    price: 420 },
-    { kind: "simple", name: "Spicy Mayo Wings (6pcs)",     price: 420 },
-  ],
-  Drinks: [
-    { kind: "simple", name: "Drink 1.5 ltr",  price: 220 },
-    { kind: "simple", name: "NR 345ml",        price: 80 },
-    { kind: "simple", name: "Water small",     price: 70 },
-    { kind: "simple", name: "Extra Dips",      price: 70, desc: "Peri Peri / Detroit Special / Malai / Chipotle" },
-  ],
-};
+// Legacy types retained so card components compile without changes
+type PizzaItem  = { kind: "pizza";  name: string; desc?: string; priceMed: number; priceLg: number };
+type SimpleItem = { kind: "simple"; name: string; desc?: string; price: number; image?: string; emoji?: string };
 
 // ── Pizza card — has its own size-toggle state ────────────────────────────────
 
@@ -203,8 +160,17 @@ function SimpleCard({ item, category, index }: { item: SimpleItem; category: str
 // ── Section ───────────────────────────────────────────────────────────────────
 
 export function MenuSection() {
+  const { menu, categories } = useCMS();
   const [activeTab, setActiveTab] = useState("Pizza");
   const [modalOpen, setModalOpen] = useState(false);
+
+  // Normalise CMS items into the legacy card types so cards need no changes
+  const normalizePizza = (i: CMSPizzaItem): PizzaItem => ({ kind: "pizza", name: i.name, desc: i.desc, priceMed: i.priceMed, priceLg: i.priceLg });
+  const normalizeSimple = (i: CMSSimpleItem): SimpleItem => ({ kind: "simple", name: i.name, desc: i.desc, price: i.price, image: i.imageUrl, emoji: i.emoji });
+
+  const activeItems = (menu[activeTab] ?? [])
+    .filter(i => i.available !== false)
+    .map(i => i.kind === "pizza" ? normalizePizza(i as CMSPizzaItem) : normalizeSimple(i as CMSSimpleItem));
 
   return (
     <section id="menu" className="py-24 bg-white relative">
@@ -239,9 +205,9 @@ export function MenuSection() {
             role="tablist"
             aria-label="Menu categories"
           >
-            {CATEGORIES.map((cat) => {
+            {categories.map((cat) => {
               const active = activeTab === cat;
-              const { icon, label } = CATEGORY_META[cat];
+              const meta   = CATEGORY_META[cat] ?? { icon: "🍽️", label: cat };
               return (
                 <button
                   key={cat}
@@ -258,8 +224,8 @@ export function MenuSection() {
                     }
                   `}
                 >
-                  <span aria-hidden="true">{icon}</span>
-                  {label}
+                  <span aria-hidden="true">{meta.icon}</span>
+                  {meta.label}
                   {active && (
                     <motion.span
                       layoutId="tab-indicator"
@@ -285,7 +251,7 @@ export function MenuSection() {
             role="tabpanel"
             aria-label={`${activeTab} menu`}
           >
-            {menuData[activeTab].map((item, index) =>
+            {activeItems.map((item, index) =>
               item.kind === "pizza" ? (
                 <PizzaCard key={item.name} item={item} index={index} />
               ) : (

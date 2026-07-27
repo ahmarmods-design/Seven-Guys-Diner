@@ -1,0 +1,261 @@
+Think carefully before making any changes.
+
+IMPORTANT:
+
+Do NOT rebuild the Admin Panel.
+
+Do NOT redesign the existing UI.
+
+Use the existing Admin Dashboard and upgrade it into a complete Restaurant CMS.
+
+==================================================
+GOAL
+==================================================
+
+The restaurant owner must be able to manage the entire website without touching the source code.
+
+Everything should be editable from the Admin Panel.
+
+==================================================
+MENU MANAGER
+==================================================
+
+Allow the owner to:
+
+• Add new menu items
+
+• Edit existing items
+
+• Delete items
+
+• Upload or replace product images
+
+• Change product name
+
+• Change description
+
+• Change category
+
+• Change price
+
+• Change discount price
+
+• Mark item as Featured
+
+• Enable/Disable availability
+
+==================================================
+DEALS & OFFERS
+==================================================
+
+Allow the owner to:
+
+Create
+
+Edit
+
+Delete
+
+Enable
+
+Disable
+
+Deals
+
+Limited Time Offers
+
+==================================================
+CATEGORY MANAGER
+==================================================
+
+Allow:
+
+Create Category
+
+Rename Category
+
+Delete Category
+
+Reorder Categories
+
+==================================================
+BRANCH SETTINGS
+==================================================
+
+Allow editing:
+
+Branch Name
+
+Address
+
+Phone Number
+
+WhatsApp Number
+
+Google Maps Link
+
+Branch Images
+
+Delivery Areas
+
+==================================================
+BUSINESS HOURS
+==================================================
+
+Allow changing:
+
+Opening Time
+
+Closing Time
+
+Holiday Status
+
+Temporary Closed
+
+==================================================
+GALLERY MANAGER
+==================================================
+
+Upload Images
+
+Replace Images
+
+Delete Images
+
+==================================================
+REVIEWS
+==================================================
+
+Add
+
+Edit
+
+Delete
+
+Hide
+
+Show
+
+==================================================
+HOMEPAGE CONTENT
+==================================================
+
+Allow editing:
+
+Hero Heading
+
+Hero Description
+
+Banner Images
+
+Homepage Sections
+
+==================================================
+FOOTER
+==================================================
+
+Allow editing:
+
+Footer Text
+
+Copyright
+
+Designer Credit
+
+==================================================
+CONTACT INFORMATION
+==================================================
+
+Allow editing:
+
+Phone
+
+WhatsApp
+
+Email
+
+Address
+
+==================================================
+SOCIAL MEDIA
+==================================================
+
+Allow editing:
+
+Facebook
+
+Instagram
+
+TikTok
+
+Google Maps
+
+==================================================
+SEO
+==================================================
+
+Allow editing:
+
+Website Title
+
+Meta Description
+
+Keywords
+
+==================================================
+SAVE SYSTEM
+==================================================
+
+Every editable page must have:
+
+Save Changes
+
+Cancel Changes
+
+Show:
+
+Saving...
+
+then
+
+Changes Saved Successfully
+
+==================================================
+LIVE SYNCHRONIZATION
+==================================================
+
+The Admin Panel must be connected to persistent storage.
+
+When the owner saves any change:
+
+• The live website should update automatically within a few seconds.
+
+• No code editing.
+
+• No redeployment.
+
+• No manual refresh.
+
+• Visitors should see the updated content automatically.
+
+==================================================
+IMPORTANT
+==================================================
+
+Reuse the existing Admin Panel.
+
+Do not rebuild it.
+
+Do not break any existing functionality.
+
+Only extend it into a complete production-ready Restaurant CMS.
+
+Review every page before finishing.
+
+Test on:
+
+Desktop
+
+Tablet
+
+Mobile

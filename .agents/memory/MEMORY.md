@@ -1,0 +1,1 @@
+- [CMS Architecture](cms-architecture.md) — full CMS built: DB schema, API routes, 9 admin pages, CMSContext polling, public component wiring.

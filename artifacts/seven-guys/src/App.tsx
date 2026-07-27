@@ -10,6 +10,7 @@ import { OrderReviewModal }   from "@/components/OrderReviewModal";
 import { BranchProvider }     from "@/context/BranchContext";
 import { CartProvider }       from "@/context/CartContext";
 import { CartDrawer }         from "@/components/CartDrawer";
+import { CMSProvider, useCMS } from "@/context/CMSContext";
 
 // ── Below-the-fold — code-split and lazy-loaded ────────────────────────────
 const PizzaSection    = lazy(() => import("@/components/PizzaSection").then(m    => ({ default: m.PizzaSection    })));
@@ -26,25 +27,24 @@ const ContactAndFooter = lazy(() => import("@/components/ContactAndFooter").then
 const SectionFallback = () => <div aria-hidden />;
 
 function Head() {
+  const { website } = useCMS();
   useEffect(() => {
-    document.title = "Seven Guys Pizza & Burger | Detroit Pizza & Gourmet Burgers in Gujranwala";
+    if (website.seoTitle) document.title = website.seoTitle;
     const setMeta = (name: string, content: string) => {
+      if (!content) return;
       let meta = document.querySelector(`meta[name="${name}"]`);
-      if (!meta) {
-        meta = document.createElement("meta");
-        meta.setAttribute("name", name);
-        document.head.appendChild(meta);
-      }
+      if (!meta) { meta = document.createElement("meta"); meta.setAttribute("name", name); document.head.appendChild(meta); }
       meta.setAttribute("content", content);
     };
-    setMeta("description", "Order Detroit-style square pizza and gourmet burgers in Gujranwala. 3 branches — Jugna Bazar, Civil Lines, Kings Mall. Delivery available 2PM–2AM. Call 0319-4800036.");
-    setMeta("keywords", "Detroit pizza Gujranwala, pizza burger Gujranwala, Seven Guys, best pizza Pakistan");
-  }, []);
+    setMeta("description", website.seoDescription);
+    setMeta("keywords",    website.seoKeywords);
+  }, [website.seoTitle, website.seoDescription, website.seoKeywords]);
   return null;
 }
 
 export default function App() {
   return (
+    <CMSProvider>
     <CartProvider>
     <BranchProvider>
       <div className="min-h-screen bg-background font-sans selection:bg-secondary selection:text-primary pb-20 md:pb-0">
@@ -96,5 +96,6 @@ export default function App() {
       </div>
     </BranchProvider>
     </CartProvider>
+    </CMSProvider>
   );
 }
