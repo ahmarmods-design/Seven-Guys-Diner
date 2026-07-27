@@ -8,6 +8,7 @@ import plainFriesImg from "@assets/plain_fries_1785179299440.webp";
 import wingsImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.23_PM_(1)_1784372623994.webp";
 import nuggetsImg from "@assets/chicken_nuggets_1785176425168.webp";
 import { useCart } from "@/context/CartContext";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const FRIES_OPTIONS = [
   { label: "Loaded Fries",    price: 600 },
@@ -35,6 +36,7 @@ type WingsFlavor = (typeof WINGS_FLAVORS)[number];
 
 export function FriesAndWings() {
   const { addItem } = useCart();
+  const isMobile = useIsMobile();
 
   // Fries option — default to Loaded Fries (Rs. 600)
   const [friesOption, setFriesOption] = useState<FriesOption>(FRIES_OPTIONS[0]);
@@ -52,11 +54,11 @@ export function FriesAndWings() {
   const [wingsFlav, setWingsFlav] = useState<WingsFlavor>(WINGS_FLAVORS[0]);
 
   return (
-    <section className="py-24 bg-gray-50 overflow-hidden">
+    <section className="py-12 md:py-24 bg-gray-50 overflow-hidden">
       <div className="container mx-auto px-4 md:px-6">
 
         {/* ── Loaded Fries ──────────────────────────────────────────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-32">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center mb-16 md:mb-32">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -68,19 +70,21 @@ export function FriesAndWings() {
             </h2>
 
             {/* Dynamic price */}
-            <div className="font-heading font-black text-3xl text-primary mb-4">
+            <div className="font-heading font-black text-3xl text-primary mb-2 md:mb-4">
               Rs. {friesOption.price}
               <span className="text-base font-normal text-muted-foreground ml-2">
                 {friesOption.label}
               </span>
             </div>
 
-            <p className="text-muted-foreground text-lg mb-6 max-w-lg">
-              Crispy, golden fries completely smothered in our signature creamy
-              cheese sauce, topped with grilled chicken chunks, olives,
-              jalapeños, and bell peppers. Served hot in a premium aluminum
-              tray. It's a meal on its own.
-            </p>
+            {!isMobile && (
+              <p className="text-muted-foreground text-lg mb-6 max-w-lg">
+                Crispy, golden fries completely smothered in our signature creamy
+                cheese sauce, topped with grilled chicken chunks, olives,
+                jalapeños, and bell peppers. Served hot in a premium aluminum
+                tray. It's a meal on its own.
+              </p>
+            )}
 
             {/* Fries option selector */}
             <div className="mb-6">
@@ -153,7 +157,7 @@ export function FriesAndWings() {
         </div>
 
         {/* ── Chicken Nuggets ────────────────────────────────────────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-32">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center mb-16 md:mb-32">
 
           {/* Visual — left on desktop, top on mobile */}
           <motion.div
@@ -193,16 +197,18 @@ export function FriesAndWings() {
             </h2>
 
             {/* Price */}
-            <div className="font-heading font-black text-3xl text-primary mb-4">
+            <div className="font-heading font-black text-3xl text-primary mb-2 md:mb-4">
               Rs. 399
               <span className="text-base font-normal text-muted-foreground ml-2">6 pcs</span>
             </div>
 
-            <p className="text-muted-foreground text-lg mb-8 max-w-lg">
-              6 crispy golden chicken nuggets, perfectly seasoned and served hot
-              with signature dips. Golden on the outside, juicy on the inside —
-              the perfect shareable snack.
-            </p>
+            {!isMobile && (
+              <p className="text-muted-foreground text-lg mb-8 max-w-lg">
+                6 crispy golden chicken nuggets, perfectly seasoned and served hot
+                with signature dips. Golden on the outside, juicy on the inside —
+                the perfect shareable snack.
+              </p>
+            )}
 
             <Button
               size="lg"
@@ -229,7 +235,7 @@ export function FriesAndWings() {
             viewport={{ once: true }}
             className="relative"
           >
-            <div className="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl bg-white flex items-center justify-center p-8">
+            <div className="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl bg-white flex items-center justify-center p-4 md:p-8">
               <img
                 src={wingsImg}
                 alt="Seven Guys Wings"
@@ -250,12 +256,14 @@ export function FriesAndWings() {
             <h2 className="text-4xl md:text-5xl font-heading font-extrabold text-primary mb-6">
               SIGNATURE <span className="text-secondary">WINGS</span>
             </h2>
-            <p className="text-muted-foreground text-lg mb-8 max-w-lg">
-              Tender on the inside, perfectly baked on the outside. Choose your
-              size and flavor profile — then get ready to get messy.
-            </p>
+            {!isMobile && (
+              <p className="text-muted-foreground text-lg mb-8 max-w-lg">
+                Tender on the inside, perfectly baked on the outside. Choose your
+                size and flavor profile — then get ready to get messy.
+              </p>
+            )}
 
-            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-8">
+            <div className="bg-white rounded-2xl p-4 md:p-6 shadow-sm border border-gray-100 mb-4 md:mb-8">
               <h3 className="font-heading font-bold text-2xl text-primary mb-4">
                 Wings
               </h3>

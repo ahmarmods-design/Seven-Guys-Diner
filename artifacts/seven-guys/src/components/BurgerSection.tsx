@@ -8,6 +8,7 @@ import doubleCrunchImg from "@assets/double_fillet_crunch_burger_1785180168942.w
 import chapliImg from "@assets/broast_burger_1785180182461.webp";
 import filletImg from "@assets/chicken_burger_1785180199976.webp";
 import { useCart } from "@/context/CartContext";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const burgers = [
   { name: "Super Zinger Burger", price: "460" },
@@ -25,14 +26,15 @@ const burgerImageMap: Record<string, string> = {
 
 export function BurgerSection() {
   const { addItem } = useCart();
+  const isMobile = useIsMobile();
   const [selectedBurger, setSelectedBurger] = useState<string | null>(null);
   const currentBurgerImg = selectedBurger ? burgerImageMap[selectedBurger] : burgerImg;
   return (
-    <section className="py-24 bg-primary text-white overflow-hidden relative">
+    <section className="py-12 md:py-24 bg-primary text-white overflow-hidden relative">
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-secondary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
       
       <div className="container mx-auto px-4 md:px-6 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
           
           <motion.div
             initial={{ opacity: 0, scale: 0.9, rotate: 2 }}
@@ -64,19 +66,21 @@ export function BurgerSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl md:text-5xl font-heading font-extrabold mb-6">
+            <h2 className="text-4xl md:text-5xl font-heading font-extrabold mb-3 md:mb-6">
               GOURMET <span className="text-secondary">BURGERS</span>
             </h2>
-            <p className="text-white/80 text-lg mb-10 max-w-lg">
-              Stacked high, bursting with flavor, and wrapped in premium toasted buns. The kind of burgers that demand both hands and your full attention.
-            </p>
+            {!isMobile && (
+              <p className="text-white/80 text-lg mb-10 max-w-lg">
+                Stacked high, bursting with flavor, and wrapped in premium toasted buns. The kind of burgers that demand both hands and your full attention.
+              </p>
+            )}
 
-            <div className="space-y-4">
+            <div className="space-y-2 md:space-y-4">
               {burgers.map((burger, index) => (
                 <div 
                   key={index}
                   onClick={() => setSelectedBurger(burger.name)}
-                  className={`flex items-center justify-between p-5 rounded-xl transition-colors cursor-pointer ${
+                  className={`flex items-center justify-between p-3 md:p-5 rounded-xl transition-colors cursor-pointer ${
                     (selectedBurger ? selectedBurger === burger.name : burger.highlight)
                       ? 'bg-secondary text-primary'
                       : 'bg-white/10 hover:bg-white/15'
