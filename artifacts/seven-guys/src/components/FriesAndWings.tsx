@@ -4,6 +4,7 @@ import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import loadedFriesImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.24_PM_1784372710689.webp";
 import wingsImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.23_PM_(1)_1784372623994.webp";
+import nuggetsImg from "@assets/chicken_nuggets_1785176425168.webp";
 import { useCart } from "@/context/CartContext";
 
 const FRIES_OPTIONS = [
@@ -153,30 +154,13 @@ export function FriesAndWings() {
             viewport={{ once: true }}
             className="relative"
           >
-            {/* Product panel — premium golden styling in place of a photo */}
-            <div
-              className="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl relative flex items-center justify-center"
-              style={{ background: "linear-gradient(135deg, #fef9ec 0%, #fde68a 55%, #f59e0b 100%)" }}
-            >
-              {/* Ambient glow blobs */}
-              <div className="absolute -top-10 -right-10 w-52 h-52 bg-amber-300/25 rounded-full blur-3xl pointer-events-none" />
-              <div className="absolute -bottom-10 -left-10 w-44 h-44 bg-orange-400/20 rounded-full blur-2xl pointer-events-none" />
-
-              {/* Centred product display */}
-              <div className="relative flex flex-col items-center gap-3 select-none">
-                <div className="flex gap-4 text-7xl md:text-8xl drop-shadow-md" aria-hidden="true">
-                  🍗🍗🍗
-                </div>
-                <div className="flex gap-4 text-7xl md:text-8xl drop-shadow-md" aria-hidden="true">
-                  🍗🍗🍗
-                </div>
-                <p
-                  className="font-heading font-black tracking-widest uppercase text-amber-900/60 text-xs mt-1"
-                  aria-hidden="true"
-                >
-                  6 Crispy Pieces
-                </p>
-              </div>
+            <div className="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl bg-white">
+              <img
+                src={nuggetsImg}
+                alt="Chicken Nuggets 6 pcs"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
             </div>
 
             {/* Floating badge — mirrors Fries badge, opposite corner */}
