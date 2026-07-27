@@ -3,13 +3,13 @@ import { motion } from "framer-motion";
 import * as Dialog from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 
-import heroPizzaImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.26_PM_(1)_1784372618172.jpeg";
-import wingsImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.23_PM_(1)_1784372623994.jpeg";
-import burgerImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.26_PM_(2)_1784372637543.jpeg";
-import loadedFriesImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.24_PM_1784372710689.jpeg";
-import restaurantInterior1Img from "@assets/WhatsApp_Image_2026-07-18_at_4.48.23_PM_1784372660439.jpeg";
-import restaurantInterior2Img from "@assets/WhatsApp_Image_2026-07-18_at_4.48.23_PM_1784372723393.jpeg";
-import exteriorSignImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.24_PM_(1)_1784372716409.jpeg";
+import heroPizzaImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.26_PM_(1)_1784372618172.webp";
+import wingsImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.23_PM_(1)_1784372623994.webp";
+import burgerImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.26_PM_(2)_1784372637543.webp";
+import loadedFriesImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.24_PM_1784372710689.webp";
+import restaurantInterior1Img from "@assets/WhatsApp_Image_2026-07-18_at_4.48.23_PM_1784372660439.webp";
+import restaurantInterior2Img from "@assets/WhatsApp_Image_2026-07-18_at_4.48.23_PM_1784372723393.webp";
+import exteriorSignImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.24_PM_(1)_1784372716409.webp";
 
 const images = [
   { src: heroPizzaImg, alt: "Detroit Pizza", className: "col-span-1 row-span-2 aspect-[3/4]" },

@@ -1,6 +1,6 @@
 import { SiInstagram, SiTiktok, SiFacebook, SiWhatsapp } from "react-icons/si";
 import { Phone, MapPin, Clock } from "lucide-react";
-import logoImg from "@assets/WhatsApp_Image_2026-07-18_at_4.55.48_PM_1784372602729.jpeg";
+import logoImg from "@assets/WhatsApp_Image_2026-07-18_at_4.55.48_PM_1784372602729.webp";
 
 export function ContactAndFooter() {
   return (

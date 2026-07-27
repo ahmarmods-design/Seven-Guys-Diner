@@ -2,9 +2,9 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { MapPin, Phone, Clock, Navigation } from "lucide-react";
 
-import branch1Img from "@assets/WhatsApp_Image_2026-07-20_at_6.32.38_PM_1784550819503.jpeg"; // Jugna Bazar branch exterior
-import branch2Img from "@assets/WhatsApp_Image_2026-07-20_at_5.57.16_PM_1784550853058.jpeg";   // Civil Lines branch exterior
-import branch3Img from "@assets/WhatsApp_Image_2026-07-20_at_6.02.44_PM_1784550921230.jpeg";   // Kings Mall branch exterior
+import branch1Img from "@assets/WhatsApp_Image_2026-07-20_at_6.32.38_PM_1784550819503.webp"; // Jugna Bazar branch exterior
+import branch2Img from "@assets/WhatsApp_Image_2026-07-20_at_5.57.16_PM_1784550853058.webp";   // Civil Lines branch exterior
+import branch3Img from "@assets/WhatsApp_Image_2026-07-20_at_6.02.44_PM_1784550921230.webp";   // Kings Mall branch exterior
 
 const branches = [
   {
@@ -59,10 +59,12 @@ export function Branches() {
               className="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 group flex flex-col"
             >
               <div className="h-48 relative overflow-hidden">
-                <img 
-                  src={branch.image} 
-                  alt={branch.name} 
+                <img
+                  src={branch.image}
+                  alt={branch.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div className="absolute top-4 left-4 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md flex items-center gap-1">
                   <span className="w-2 h-2 rounded-full bg-white animate-pulse"></span> Open Now

@@ -1,0 +1,108 @@
+Perform a complete performance optimization of the Seven Guys website.
+
+The website currently loads too slowly on mobile devices.
+
+Your highest priority is to significantly improve loading speed without changing the premium design or removing important features.
+
+=========================
+PERFORMANCE AUDIT
+=========================
+
+First, identify every performance bottleneck.
+
+Review:
+
+• Large images
+• Unoptimized assets
+• Large JavaScript bundles
+• CSS bloat
+• Fonts
+• Animations
+• Framer Motion usage
+• Lazy loading
+• Render blocking resources
+• Unused code
+• Duplicate dependencies
+• Network requests
+
+=========================
+IMAGE OPTIMIZATION
+=========================
+
+• Compress all images while maintaining visual quality.
+• Convert images to WebP where supported.
+• Use responsive image sizes.
+• Lazy-load all images below the fold.
+• Preload only the hero image and logo.
+
+=========================
+CODE OPTIMIZATION
+=========================
+
+• Remove unused imports.
+• Remove dead code.
+• Remove unnecessary re-renders.
+• Code split large components.
+• Lazy-load heavy sections below the hero.
+• Optimize React rendering.
+• Minimize bundle size.
+
+=========================
+ANIMATION OPTIMIZATION
+=========================
+
+Keep the premium animations but optimize them.
+
+Animations must remain smooth without affecting page speed.
+
+Reduce unnecessary animation work on mobile devices if needed.
+
+=========================
+FONT OPTIMIZATION
+=========================
+
+Optimize font loading.
+
+Preload critical fonts.
+
+Remove unused font weights.
+
+=========================
+MOBILE PERFORMANCE
+=========================
+
+The website should feel extremely fast on mobile.
+
+Target:
+
+• Fast First Contentful Paint
+• Fast Largest Contentful Paint
+• Smooth scrolling
+• No lag
+• No frame drops
+
+=========================
+DO NOT
+=========================
+
+Do not remove premium features.
+
+Do not reduce image quality noticeably.
+
+Do not change the website design.
+
+=========================
+FINAL REVIEW
+=========================
+
+After optimization:
+
+Test the website on:
+
+✅ Mobile
+✅ Tablet
+✅ Desktop
+
+Ensure loading speed is significantly improved while maintaining the premium experience.
+
+Deliver production-ready optimized code.

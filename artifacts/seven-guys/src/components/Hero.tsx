@@ -7,7 +7,7 @@ import {
   useScroll,
 } from "framer-motion";
 import { Star, Clock, MapPin, MessageCircle, ChevronDown } from "lucide-react";
-import heroPizzaImg from "@assets/WhatsApp_Image_2026-07-18_at_9.41.06_PM_1784390466550.jpeg";
+import heroPizzaImg from "@assets/WhatsApp_Image_2026-07-18_at_9.41.06_PM_1784390466550.webp";
 import { useBranch } from "@/context/BranchContext";
 
 // ── Fixed particles (deterministic — no layout shift) ──────────────────────
@@ -442,6 +442,8 @@ export function Hero() {
                           src={heroPizzaImg}
                           alt="Detroit Square Pizza Loaded with Cheese"
                           className="w-full h-auto object-contain relative z-10"
+                          fetchPriority="high"
+                          decoding="async"
                           style={{
                             borderRadius: "50%",
                             maxHeight: "min(62vh, 530px)",

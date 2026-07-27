@@ -3,8 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingCart, ZoomIn, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import * as Dialog from "@radix-ui/react-dialog";
-import menuPizzaImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.25_PM_(1)_1784372614314.jpeg";
-import menuBurgersImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.26_PM_1784372608349.jpeg";
+import menuPizzaImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.25_PM_(1)_1784372614314.webp";
+import menuBurgersImg from "@assets/WhatsApp_Image_2026-07-18_at_4.48.26_PM_1784372608349.webp";
 import { useCart } from "@/context/CartContext";
 
 // ── Data ──────────────────────────────────────────────────────────────────────

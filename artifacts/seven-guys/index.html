@@ -4,18 +4,37 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
     <title>Seven Guys Pizza &amp; Burger</title>
-    <meta name="description" content="Seven Guys Pizza &amp; Burger — built on Replit. Update this description to reflect the app." />
+    <meta name="description" content="Order Detroit-style square pizza and gourmet burgers in Gujranwala. 3 branches — Jugna Bazar, Civil Lines, Kings Mall. Delivery 2PM–2AM. Call 0319-4800036." />
     <meta name="robots" content="index, follow" />
-    <meta property="og:title" content="Seven Guys Pizza &amp; Burger" />
-    <meta property="og:description" content="Seven Guys Pizza &amp; Burger — built on Replit. Update this description to reflect the app." />
+    <meta property="og:title" content="Seven Guys Pizza &amp; Burger | Detroit Pizza in Gujranwala" />
+    <meta property="og:description" content="Gujranwala's home of Detroit-style pizza. Bold flavors, premium craft, melted cheese. Order now on WhatsApp." />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Seven Guys Pizza &amp; Burger" />
-    <meta name="twitter:description" content="Seven Guys Pizza &amp; Burger — built on Replit. Update this description to reflect the app." />
+    <meta name="twitter:description" content="Gujranwala's home of Detroit-style pizza. Bold flavors, premium craft, melted cheese." />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- DNS prefetch + preconnect for Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!--
+      Non-render-blocking font load (media=print trick).
+      Inter 400/500/600 + Poppins 800 — only the weights actually used.
+      display=swap prevents invisible text during font swap.
+    -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@800&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@800&display=swap"
+      />
+    </noscript>
   </head>
   <body>
     <div id="root"></div>

@@ -63,6 +63,27 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, 'dist/public'),
     emptyOutDir: true,
+    // Raise the warning threshold slightly — we're intentionally splitting chunks
+    chunkSizeWarningLimit: 600,
+    rollupOptions: {
+      output: {
+        // Split heavy vendor libs into named cacheable chunks
+        manualChunks(id) {
+          if (id.includes('/framer-motion') || id.includes('/motion-dom') || id.includes('/motion-utils')) {
+            return 'vendor-motion';
+          }
+          if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/') || id.includes('node_modules/scheduler/')) {
+            return 'vendor-react';
+          }
+          if (id.includes('node_modules/@radix-ui/')) {
+            return 'vendor-radix';
+          }
+          if (id.includes('node_modules/lucide-react') || id.includes('node_modules/react-icons')) {
+            return 'vendor-icons';
+          }
+        },
+      },
+    },
   },
   server: {
     port,
