@@ -143,6 +143,92 @@ export function FriesAndWings() {
           </motion.div>
         </div>
 
+        {/* ── Chicken Nuggets ────────────────────────────────────────────── */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-32">
+
+          {/* Visual — left on desktop, top on mobile */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="relative"
+          >
+            {/* Product panel — premium golden styling in place of a photo */}
+            <div
+              className="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl relative flex items-center justify-center"
+              style={{ background: "linear-gradient(135deg, #fef9ec 0%, #fde68a 55%, #f59e0b 100%)" }}
+            >
+              {/* Ambient glow blobs */}
+              <div className="absolute -top-10 -right-10 w-52 h-52 bg-amber-300/25 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute -bottom-10 -left-10 w-44 h-44 bg-orange-400/20 rounded-full blur-2xl pointer-events-none" />
+
+              {/* Centred product display */}
+              <div className="relative flex flex-col items-center gap-3 select-none">
+                <div className="flex gap-4 text-7xl md:text-8xl drop-shadow-md" aria-hidden="true">
+                  🍗🍗🍗
+                </div>
+                <div className="flex gap-4 text-7xl md:text-8xl drop-shadow-md" aria-hidden="true">
+                  🍗🍗🍗
+                </div>
+                <p
+                  className="font-heading font-black tracking-widest uppercase text-amber-900/60 text-xs mt-1"
+                  aria-hidden="true"
+                >
+                  6 Crispy Pieces
+                </p>
+              </div>
+            </div>
+
+            {/* Floating badge — mirrors Fries badge, opposite corner */}
+            <div className="absolute -bottom-6 -right-6 bg-secondary text-primary font-heading font-bold text-xl p-5 rounded-2xl shadow-xl rotate-[5deg] leading-tight">
+              Hot &amp;<br />Crispy
+            </div>
+          </motion.div>
+
+          {/* Text + CTA — right on desktop, bottom on mobile */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
+            {/* Category pill */}
+            <div className="inline-block bg-secondary/25 text-primary font-bold px-4 py-2 rounded-full mb-4 text-sm">
+              Sides / Chicken
+            </div>
+
+            <h2 className="text-4xl md:text-5xl font-heading font-extrabold text-primary mb-4">
+              CHICKEN <span className="text-secondary">NUGGETS</span>
+            </h2>
+
+            {/* Price */}
+            <div className="font-heading font-black text-3xl text-primary mb-4">
+              Rs. 399
+              <span className="text-base font-normal text-muted-foreground ml-2">6 pcs</span>
+            </div>
+
+            <p className="text-muted-foreground text-lg mb-8 max-w-lg">
+              6 crispy golden chicken nuggets, perfectly seasoned and served hot
+              with signature dips. Golden on the outside, juicy on the inside —
+              the perfect shareable snack.
+            </p>
+
+            <Button
+              size="lg"
+              onClick={() =>
+                addItem({
+                  id: "wings|Nuggets|6pcs",
+                  name: "Chicken Nuggets (6 pcs)",
+                  variant: "6 pcs",
+                  price: 399,
+                })
+              }
+            >
+              <ShoppingCart size={16} className="mr-2" />
+              Add to Cart
+            </Button>
+          </motion.div>
+        </div>
+
         {/* ── Wings ─────────────────────────────────────────────────────── */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <motion.div

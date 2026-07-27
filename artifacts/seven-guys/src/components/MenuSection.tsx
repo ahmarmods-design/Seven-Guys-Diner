@@ -19,8 +19,14 @@ const CATEGORY_META: Record<string, { icon: string; label: string }> = {
 
 const CATEGORIES = Object.keys(CATEGORY_META);
 
-type PizzaItem  = { kind: "pizza"; name: string; desc?: string; priceMed: number; priceLg: number };
-type SimpleItem = { kind: "simple"; name: string; desc?: string; price: number };
+type PizzaItem  = { kind: "pizza";   name: string; desc?: string; priceMed: number; priceLg: number };
+/**
+ * SimpleItem — used for Burgers, Sides, Wings, Drinks.
+ * `image`  — imported asset URL for a product photo (shows as a thumbnail).
+ * `emoji`  — single emoji used as a visual placeholder when no photo is available.
+ * Only one of the two is needed; `image` takes priority if both are set.
+ */
+type SimpleItem = { kind: "simple";  name: string; desc?: string; price: number; image?: string; emoji?: string };
 type MenuItem   = PizzaItem | SimpleItem;
 
 const menuData: Record<string, MenuItem[]> = {
@@ -41,7 +47,7 @@ const menuData: Record<string, MenuItem[]> = {
   Sides: [
     { kind: "simple", name: "Loaded Fries",          price: 600, desc: "Cheese sauce, grilled chicken, olives, jalapeños, bell peppers" },
     { kind: "simple", name: "Foot Long Fries",       price: 680 },
-    { kind: "simple", name: "Chicken Nuggets (6pcs)", price: 399 },
+    { kind: "simple", name: "Chicken Nuggets (6 pcs)", price: 399, emoji: "🍗", desc: "6 crispy golden chicken nuggets, perfectly seasoned and served hot with signature dips." },
     { kind: "simple", name: "Plain Fries",           price: 250 },
     { kind: "simple", name: "Regular Fries",         price: 150 },
   ],
@@ -135,13 +141,33 @@ function PizzaCard({ item, index }: { item: PizzaItem; index: number }) {
 function SimpleCard({ item, category, index }: { item: SimpleItem; category: string; index: number }) {
   const { addItem } = useCart();
 
+  const hasVisual = !!(item.image || item.emoji);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05, duration: 0.25 }}
-      className="bg-gray-50 rounded-2xl p-5 border border-gray-100 hover:border-primary/20 hover:shadow-md transition-all duration-200 flex items-center justify-between gap-4"
+      className="bg-gray-50 rounded-2xl p-5 border border-gray-100 hover:border-primary/20 hover:shadow-md transition-all duration-200 flex items-center gap-4"
     >
+      {/* Optional product visual: photo or emoji thumbnail */}
+      {hasVisual && (
+        <div className="w-14 h-14 rounded-xl shrink-0 overflow-hidden border border-gray-100 shadow-sm flex items-center justify-center bg-white">
+          {item.image ? (
+            <img
+              src={item.image}
+              alt={item.name}
+              className="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+          ) : (
+            <span className="text-2xl select-none" aria-hidden="true">{item.emoji}</span>
+          )}
+        </div>
+      )}
+
+      {/* Text block */}
       <div className="flex-1 min-w-0">
         <h4 className="font-heading font-bold text-lg text-primary leading-tight">{item.name}</h4>
         {item.desc && (
@@ -151,12 +177,13 @@ function SimpleCard({ item, category, index }: { item: SimpleItem; category: str
           Rs. {item.price.toLocaleString()}
         </p>
       </div>
+
       <Button
         size="sm"
         className="shrink-0"
         onClick={() =>
           addItem({
-            id: `menu-${category}|${item.name}`,
+            id: `menu-${category.toLowerCase()}|${item.name}`,
             name: item.name,
             variant: "",
             price: item.price,
