@@ -29,6 +29,10 @@ interface CartContextValue {
   cartOpen: boolean;
   openCart: () => void;
   closeCart: () => void;
+  /** Order Review popup — shown between cart checkout and WhatsApp */
+  orderReviewOpen: boolean;
+  openOrderReview: () => void;
+  closeOrderReview: () => void;
 }
 
 const CartContext = createContext<CartContextValue | null>(null);
@@ -47,6 +51,7 @@ function loadCart(): CartItem[] {
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>(loadCart);
   const [cartOpen, setCartOpen] = useState(false);
+  const [orderReviewOpen, setOrderReviewOpen] = useState(false);
 
   // Persist to localStorage on every change
   useEffect(() => {
@@ -98,8 +103,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
         updateQty,
         clearCart,
         cartOpen,
-        openCart: () => setCartOpen(true),
+        openCart:  () => setCartOpen(true),
         closeCart: () => setCartOpen(false),
+        orderReviewOpen,
+        openOrderReview:  () => setOrderReviewOpen(true),
+        closeOrderReview: () => setOrderReviewOpen(false),
       }}
     >
       {children}

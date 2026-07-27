@@ -6,6 +6,7 @@ import { Hero }               from "@/components/Hero";
 import { Deals }              from "@/components/Deals";
 import { FloatingWhatsApp, MobileStickyOrder } from "@/components/FloatingWhatsApp";
 import { BranchPickerModal }  from "@/components/BranchPickerModal";
+import { OrderReviewModal }   from "@/components/OrderReviewModal";
 import { BranchProvider }     from "@/context/BranchContext";
 import { CartProvider }       from "@/context/CartContext";
 import { CartDrawer }         from "@/components/CartDrawer";
@@ -89,8 +90,9 @@ export default function App() {
         {/* Always-visible overlays — eager */}
         <FloatingWhatsApp />
         <MobileStickyOrder />
-        <BranchPickerModal />
         <CartDrawer />
+        <OrderReviewModal />
+        <BranchPickerModal />
       </div>
     </BranchProvider>
     </CartProvider>

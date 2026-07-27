@@ -1,0 +1,158 @@
+Create a professional Order Review popup before opening WhatsApp.
+
+Current behavior:
+
+Add to Cart
+↓
+
+Checkout
+
+↓
+
+Direct WhatsApp
+
+Replace this with the following workflow:
+
+Add to Cart
+
+↓
+
+Checkout
+
+↓
+
+Order Review Popup
+
+↓
+
+Confirm Order
+
+↓
+
+WhatsApp
+
+==================================================
+
+The popup should be elegant and premium.
+
+It must match the Seven Guys branding.
+
+Dark theme.
+
+Soft blur background.
+
+Smooth animation.
+
+==================================================
+
+Inside the popup show:
+
+Order Summary
+
+--------------------------------
+
+Product Image
+
+Product Name
+
+Individual Price
+
+Quantity
+
+Subtotal
+
+--------------------------------
+
+Grand Total
+
+==================================================
+
+Allow customers to edit everything before confirming.
+
+Each item must have:
+
+➕
+
+➖
+
+Remove
+
+Users must be able to:
+
+• Increase quantity
+
+• Decrease quantity
+
+• Remove products
+
+• Clear entire cart
+
+Everything should update instantly.
+
+==================================================
+
+Buttons
+
+Left:
+
+Continue Shopping
+
+Right:
+
+Confirm Order
+
+The Confirm Order button should only open WhatsApp after the customer confirms the order.
+
+==================================================
+
+Generate a professional WhatsApp message containing:
+
+Restaurant:
+
+Seven Guys Pizza & Burger
+
+Customer Order
+
+Product List
+
+Quantities
+
+Individual Prices
+
+Grand Total
+
+Thank you message
+
+==================================================
+
+Animations
+
+Use Framer Motion.
+
+Smooth popup animation.
+
+Smooth button animations.
+
+No lag.
+
+==================================================
+
+Responsive
+
+Desktop
+
+Tablet
+
+Mobile
+
+The popup must look premium on every device.
+
+==================================================
+
+Before completing:
+
+Review the entire ordering flow.
+
+Ensure customers cannot accidentally place the wrong order.
+
+Deliver production-ready code.

@@ -2,7 +2,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Trash2, Plus, Minus, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
-import { useBranch } from "@/context/BranchContext";
 
 export function CartDrawer() {
   const {
@@ -14,18 +13,8 @@ export function CartDrawer() {
     clearCart,
     cartOpen,
     closeCart,
+    openOrderReview,
   } = useCart();
-  const { openOrderModal } = useBranch();
-
-  function buildOrderMessage() {
-    const lines = items
-      .map(
-        (item) =>
-          `• ${item.name}${item.variant ? ` (${item.variant})` : ""} × ${item.qty}  —  Rs. ${(item.price * item.qty).toLocaleString()}`
-      )
-      .join("\n");
-    return `Hi! I'd like to place an order:\n\n${lines}\n\nSubtotal: Rs. ${subtotal.toLocaleString()}`;
-  }
 
   return (
     <AnimatePresence>
@@ -163,10 +152,10 @@ export function CartDrawer() {
                   className="w-full text-base"
                   onClick={() => {
                     closeCart();
-                    openOrderModal(buildOrderMessage());
+                    openOrderReview();
                   }}
                 >
-                  Place Order on WhatsApp
+                  Review &amp; Order
                 </Button>
 
                 <button
