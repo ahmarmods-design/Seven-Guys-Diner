@@ -16,12 +16,11 @@ export function BranchPickerModal() {
 
   // Sync local selection & shift focus when modal opens
   useEffect(() => {
-    if (modalOpen) {
-      setLocalBranch(selectedBranch);
-      // Defer focus so the animation has started
-      const t = setTimeout(() => firstRadioRef.current?.focus(), 120);
-      return () => clearTimeout(t);
-    }
+    if (!modalOpen) return;
+    setLocalBranch(selectedBranch);
+    // Defer focus so the animation has started
+    const t = setTimeout(() => firstRadioRef.current?.focus(), 120);
+    return () => clearTimeout(t);
   }, [modalOpen, selectedBranch]);
 
   // Escape key + body scroll lock

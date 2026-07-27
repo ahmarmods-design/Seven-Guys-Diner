@@ -85,8 +85,25 @@ export function ContactAndFooter() {
         </div>
 
         <div className="pt-8 border-t border-white/10 text-center text-sm flex flex-col md:flex-row justify-between items-center gap-4">
-          <p>© 2024 Seven Guys Pizza & Burger. All Rights Reserved.</p>
+          <p>© 2025 Seven Guys Pizza &amp; Burger. All Rights Reserved.</p>
           <p className="font-heading font-bold text-white/50 tracking-wider">GUJRANWALA, PAKISTAN</p>
+        </div>
+
+        {/* Designer credit */}
+        <div className="mt-6 text-center">
+          <p className="text-[11px] text-white/25 tracking-wide">
+            Designed by{" "}
+            <a
+              href="https://wa.me/923372905356?text=Assalam-o-Alaikum%20Ahmar%20Studio!%20I%20visited%20the%20Seven%20Guys%20website%20and%20I'm%20interested%20in%20getting%20a%20professional%20website%20for%20my%20business."
+              target="_blank"
+              rel="noreferrer"
+              className="inline-block text-white/40 font-semibold cursor-pointer
+                         transition-all duration-300 ease-out
+                         hover:text-secondary hover:tracking-widest"
+            >
+              Ahmar Studio
+            </a>
+          </p>
         </div>
       </div>
     </footer>
