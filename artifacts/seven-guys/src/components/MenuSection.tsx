@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingCart, ZoomIn, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -69,6 +70,7 @@ const menuData: Record<string, MenuItem[]> = {
 
 function PizzaCard({ item, index }: { item: PizzaItem; index: number }) {
   const { addItem } = useCart();
+  const isMobile = useIsMobile();
   const [size, setSize] = useState<"Medium" | "Large">("Large");
   const price = size === "Medium" ? item.priceMed : item.priceLg;
 
@@ -82,8 +84,8 @@ function PizzaCard({ item, index }: { item: PizzaItem; index: number }) {
       <div className="flex items-start justify-between gap-3 mb-2 md:mb-3">
         <div className="flex-1 min-w-0">
           <h4 className="font-heading font-bold text-base md:text-lg text-primary leading-tight">{item.name}</h4>
-          {item.desc && (
-            <p className="hidden md:block text-xs text-muted-foreground mt-1 leading-snug">{item.desc}</p>
+          {item.desc && !isMobile && (
+            <p className="text-xs text-muted-foreground mt-1 leading-snug">{item.desc}</p>
           )}
         </div>
       </div>
@@ -140,6 +142,7 @@ function PizzaCard({ item, index }: { item: PizzaItem; index: number }) {
 
 function SimpleCard({ item, category, index }: { item: SimpleItem; category: string; index: number }) {
   const { addItem } = useCart();
+  const isMobile = useIsMobile();
 
   const hasVisual = !!(item.image || item.emoji);
 
