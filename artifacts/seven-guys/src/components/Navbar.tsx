@@ -130,7 +130,7 @@ export function Navbar() {
 
       {/* Mobile Nav Panel */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 bg-white z-40 flex flex-col pt-24 px-6 md:hidden">
+        <div className="fixed left-0 right-0 top-0 h-screen overflow-y-auto bg-white z-50 flex flex-col pt-24 px-6 md:hidden">
           <nav className="flex flex-col gap-6 text-2xl font-heading font-bold text-primary">
             {navLinks.map((link) => (
               <a
