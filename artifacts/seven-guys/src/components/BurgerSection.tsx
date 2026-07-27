@@ -41,7 +41,7 @@ export function BurgerSection() {
             transition={{ duration: 0.6 }}
             className="relative"
           >
-            <div className="aspect-square rounded-3xl overflow-hidden shadow-2xl border-4 border-secondary/30 relative">
+            <div className="aspect-[4/3] md:aspect-square rounded-3xl overflow-hidden shadow-2xl border-4 border-secondary/30 relative">
               <img 
                 src={currentBurgerImg}
                 alt={selectedBurger ?? "Double Crunch Burger"}

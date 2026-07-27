@@ -1,0 +1,50 @@
+Update only the MOBILE VIEW of the website (use the existing mobile breakpoint, e.g., max-width: 768px). Do NOT modify any desktop layout, styling, functionality, animations, colors, typography, prices, buttons, or popup logic.
+
+## Mobile-first optimization (highest priority)
+
+### 1. Hide product descriptions on mobile
+
+* Hide all product description text in every menu/product card on mobile only.
+* Remove the space that the description occupied so cards become more compact.
+
+### 2. Compact the product cards for mobile
+
+* Reduce vertical padding of each product card by about 20–25%.
+* Reduce gaps between cards by about 20%.
+* Keep the current visual style, border radius, shadows, and colors.
+
+### 3. Ensure product name + price + Add button fit in one frame
+
+* Product name and price must remain visible together without awkward wrapping.
+* If needed, slightly reduce:
+
+  * product image size (about 10–15%),
+  * product title font size (about 1 step, e.g., 18px → 16px),
+  * price font size (about 1 step),
+  * Add button padding (not height below 36px).
+* Keep touch targets at least 44px tall.
+
+### 4. Optimize image areas on mobile
+
+* Reduce burger/pizza showcase image height by about 10–15% on mobile only.
+* Keep the same aspect ratio and use the existing object-fit behavior.
+* Do not change desktop image sizes.
+
+### 5. Prevent layout issues
+
+* No horizontal scrolling.
+* No text clipping or overflow.
+* Cards should resize naturally and remain aligned on all common mobile widths (320px, 360px, 375px, 390px, 412px, 430px).
+
+### 6. Preserve all existing functionality
+
+* Keep image-switching logic exactly as it works now.
+* Keep active burger highlighting, popups, Add buttons, prices, animations, and responsive breakpoints unchanged.
+
+## Expected mobile result
+
+* More content visible in a single screen.
+* Product name, price, and Add button visible together.
+* Cleaner, faster, and more professional mobile experience.
+
+IMPORTANT: Apply these changes ONLY to mobile view and do not touch any desktop styles or behaviors.

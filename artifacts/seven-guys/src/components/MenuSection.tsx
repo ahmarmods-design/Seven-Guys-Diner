@@ -77,11 +77,11 @@ function PizzaCard({ item, index }: { item: PizzaItem; index: number }) {
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05, duration: 0.25 }}
-      className="bg-gray-50 rounded-2xl p-5 border border-gray-100 hover:border-primary/20 hover:shadow-md transition-all duration-200"
+      className="bg-gray-50 rounded-2xl p-3 md:p-5 border border-gray-100 hover:border-primary/20 hover:shadow-md transition-all duration-200"
     >
-      <div className="flex items-start justify-between gap-3 mb-3">
+      <div className="flex items-start justify-between gap-3 mb-2 md:mb-3">
         <div className="flex-1 min-w-0">
-          <h4 className="font-heading font-bold text-lg text-primary leading-tight">{item.name}</h4>
+          <h4 className="font-heading font-bold text-base md:text-lg text-primary leading-tight">{item.name}</h4>
           {item.desc && (
             <p className="hidden md:block text-xs text-muted-foreground mt-1 leading-snug">{item.desc}</p>
           )}
@@ -89,7 +89,7 @@ function PizzaCard({ item, index }: { item: PizzaItem; index: number }) {
       </div>
 
       {/* Size toggle */}
-      <div className="flex items-center gap-2 mb-3" role="group" aria-label="Select pizza size">
+      <div className="flex items-center gap-2 mb-2 md:mb-3" role="group" aria-label="Select pizza size">
         {(["Medium", "Large"] as const).map((s) => {
           const active = size === s;
           const p = s === "Medium" ? item.priceMed : item.priceLg;
@@ -113,7 +113,7 @@ function PizzaCard({ item, index }: { item: PizzaItem; index: number }) {
       </div>
 
       <div className="flex items-center justify-between">
-        <span className="font-heading font-black text-xl text-primary">
+        <span className="font-heading font-black text-lg md:text-xl text-primary">
           Rs. {price.toLocaleString()}
         </span>
         <Button
@@ -148,11 +148,11 @@ function SimpleCard({ item, category, index }: { item: SimpleItem; category: str
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05, duration: 0.25 }}
-      className="bg-gray-50 rounded-2xl p-5 border border-gray-100 hover:border-primary/20 hover:shadow-md transition-all duration-200 flex items-center gap-4"
+      className="bg-gray-50 rounded-2xl p-3 md:p-5 border border-gray-100 hover:border-primary/20 hover:shadow-md transition-all duration-200 flex items-center gap-4"
     >
       {/* Optional product visual: photo or emoji thumbnail */}
       {hasVisual && (
-        <div className="w-14 h-14 rounded-xl shrink-0 overflow-hidden border border-gray-100 shadow-sm flex items-center justify-center bg-white">
+        <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl shrink-0 overflow-hidden border border-gray-100 shadow-sm flex items-center justify-center bg-white">
           {item.image ? (
             <img
               src={item.image}
@@ -173,7 +173,7 @@ function SimpleCard({ item, category, index }: { item: SimpleItem; category: str
         {item.desc && (
           <p className="hidden md:block text-xs text-muted-foreground mt-1 leading-snug">{item.desc}</p>
         )}
-        <p className="font-heading font-black text-xl text-primary mt-2">
+        <p className="font-heading font-black text-lg md:text-xl text-primary mt-1 md:mt-2">
           Rs. {item.price.toLocaleString()}
         </p>
       </div>
@@ -278,7 +278,7 @@ export function MenuSection() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.22 }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 max-w-5xl mx-auto"
             role="tabpanel"
             aria-label={`${activeTab} menu`}
           >
